@@ -33,11 +33,6 @@ CheerTribe solves this by collapsing logistics, navigation, and ticketing into a
 - Detail panel showing capacity, surface, opening year, match count, and specific public-transit directions per venue.
 - Interactive OpenStreetMap integration via `StadiumMap.tsx` with clickable markers.
 
-### Speech Integration
-- **Microphone Input**: Deepgram transcription converts voice queries to text input.
-- **Voice Readback**: Sarvam AI synthesis reads agent responses aloud.
-- **Graceful Degradation**: Missing API keys are detected at runtime; the chat interface remains fully functional without voice features.
-
 ### Procedural UI
 - Parallax mouse-tracking hero on the landing page (`Stadium3D.tsx`).
 - Faded stadium-image global background with CSS `mask-image` radial gradient fade on all non-home pages.
@@ -110,7 +105,7 @@ fifa-stadium/
 | **CORS lockdown** | `cors()` is configured with an explicit origin whitelist. Cross-origin requests from unknown domains are blocked. |
 | **Rate limiting** | `express-rate-limit` caps requests per IP per time window on all API routes, preventing abuse and runaway costs from LLM API calls. |
 | **Prompt injection defense** | System prompts in `prompts.ts` use XML-delimited `<user_input>` tags to isolate user text from system instructions. Keyword detection blocks common jailbreak patterns. |
-| **Secret management** | `.gitignore` excludes `.env` files. API keys for Groq, NVIDIA NIM, Deepgram, and Sarvam are loaded via `dotenv` at runtime and never appear in client-side bundles. |
+| **Secret management** | `.gitignore` excludes `.env` files. API keys for Groq and NVIDIA NIM are loaded via `dotenv` at runtime and never appear in client-side bundles. |
 | **Error masking** | In production, server errors return a generic message. Stack traces and internal error details are never leaked to the client. |
 | **Error boundary** | `ErrorBoundary.tsx` wraps the entire React tree. Unhandled component errors show a user-friendly fallback instead of crashing the page. |
 
@@ -176,7 +171,7 @@ npm run build       # Full TypeScript check + production build
 | Frontend | React 19, TypeScript, Tailwind CSS v4, Framer Motion |
 | Build | Vite 8, Rolldown, Vitest |
 | Backend | Express, Helmet, Zod, express-rate-limit |
-| AI | Groq (primary LLM), NVIDIA NIM (fallback), Deepgram (STT), Sarvam (TTS) |
+| AI | Groq (primary LLM), NVIDIA NIM (fallback) |
 | Maps | Leaflet + OpenStreetMap tiles |
 | PWA | vite-plugin-pwa with Workbox precaching |
 
@@ -206,8 +201,6 @@ Create a `.env` file in the project root with your API keys:
 ```env
 GROQ_API_KEY=your_groq_key
 NIM_API_KEY=your_nvidia_nim_key
-DEEPGRAM_API_KEY=your_deepgram_key
-SARVAM_API_KEY=your_sarvam_key
 ```
 
 The app runs without API keys — AI features gracefully degrade while the UI remains fully functional.
