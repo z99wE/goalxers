@@ -88,9 +88,9 @@ export default function HowItWorks() {
             className="glass-panel p-8 rounded-3xl flex flex-col gap-5 border border-white/5 bg-[#0a0a10] backdrop-blur-md hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300"
           >
             <div>
-              <h3 className="text-lg font-extrabold text-white tracking-wide uppercase font-sans mb-2 border-b border-white/5 pb-2">
+              <h2 className="text-lg font-extrabold text-white tracking-wide uppercase font-sans mb-2 border-b border-white/5 pb-2">
                 {step.title}
-              </h3>
+              </h2>
               <p className="text-xs text-slate-400 leading-relaxed min-h-[50px]">{step.description}</p>
             </div>
             
@@ -100,11 +100,14 @@ export default function HowItWorks() {
               </div>
               {step.prompts.map((prompt, pIdx) => {
                 const isOpen = openPrompt === prompt.q;
+                const accordionId = `faq-content-${idx}-${pIdx}`;
                 return (
                   <div key={pIdx} className="w-full border-b border-white/5 pb-2.5 last:border-b-0">
                     <button
                       onClick={() => handleToggle(prompt.q)}
-                      className="w-full text-left py-1 text-xs text-slate-300 hover:text-white transition-colors flex items-center justify-between font-medium cursor-pointer"
+                      aria-expanded={isOpen}
+                      aria-controls={accordionId}
+                      className="w-full text-left py-1 text-xs text-slate-300 hover:text-white transition-colors flex items-center justify-between font-medium cursor-pointer focus:outline-none focus:text-yellow-400"
                     >
                       <span className="pr-4">{prompt.q}</span>
                       <span className="text-[9px] text-yellow-400 font-mono transition-transform duration-200">
@@ -114,6 +117,7 @@ export default function HowItWorks() {
                     <AnimatePresence initial={false}>
                       {isOpen && (
                         <motion.div
+                          id={accordionId}
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}

@@ -80,6 +80,16 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
 
   useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages, isTyping]);
 
+  // Close assistant on Escape key press
+  useEffect(() => {
+    if (embedded) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [embedded]);
+
   const handleSendText = useCallback(async (text: string) => {
     if (!text.trim() || isTyping) return;
 
@@ -141,11 +151,19 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={clearChat} className="text-white/25 hover:text-white/50 text-[10px] font-mono uppercase tracking-wider cursor-pointer transition-colors">
+          <button
+            onClick={clearChat}
+            aria-label="Clear chat history"
+            className="text-white/25 hover:text-white/50 text-[10px] font-mono uppercase tracking-wider cursor-pointer transition-colors focus:outline-none focus:text-white/70"
+          >
             Clear
           </button>
           {!embedded && (
-            <button onClick={() => setIsOpen(false)} className="text-white/30 hover:text-white cursor-pointer transition-colors text-lg leading-none">
+            <button
+              onClick={() => setIsOpen(false)}
+              aria-label="Close AI Assistant"
+              className="text-white/30 hover:text-white cursor-pointer transition-colors text-lg leading-none focus:outline-none focus:text-white"
+            >
               ✕
             </button>
           )}
@@ -153,7 +171,7 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-5 flex flex-col gap-3" role="log" aria-live="polite">
+      <div className="flex-1 overflow-y-auto px-4 py-5 flex flex-col gap-3" role="log" aria-live="polite" aria-label="AI assistant chat history" tabIndex={0}>
         {messages.map(msg => (
           <motion.div
             key={msg.id}
@@ -206,13 +224,15 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask about tickets, stadiums, schedules…"
+            aria-label="Message to CheerTribe AI"
             className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-yellow-400/40 focus:bg-white/7 transition-all min-w-0"
             style={{ letterSpacing: '0.015em' }}
           />
           <button
             type="submit"
             disabled={!input.trim() || isTyping}
-            className="flex-shrink-0 w-9 h-9 bg-yellow-400 text-black rounded-xl flex items-center justify-center disabled:opacity-35 hover:bg-yellow-300 transition-all cursor-pointer text-sm font-bold"
+            aria-label="Send message"
+            className="flex-shrink-0 w-9 h-9 bg-yellow-400 text-black rounded-xl flex items-center justify-center disabled:opacity-35 hover:bg-yellow-300 transition-all cursor-pointer text-sm font-bold focus:outline-none focus:ring-2 focus:ring-yellow-400/50"
           >
             ↑
           </button>

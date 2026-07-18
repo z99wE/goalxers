@@ -17,14 +17,16 @@ const STATS = [
   { label: 'Participating Teams', value: '48' },
 ];
 
-function MatchCard({ match, index }: { match: typeof MATCHES[0], index: number }) {
+function MatchCard({ match, index, onClick }: { match: typeof MATCHES[0], index: number, onClick: () => void }) {
   const isLive = match.score === 'LIVE';
   return (
-    <motion.div
+    <motion.button
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
-      className="flex-shrink-0 w-56 bg-white/4 border border-white/8 rounded-xl p-4 hover:border-yellow-400/20 hover:bg-white/6 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300 cursor-pointer"
+      onClick={onClick}
+      aria-label={`${match.home} vs ${match.away} on ${match.date} at ${match.venue}${isLive ? ' — LIVE' : ''}`}
+      className="flex-shrink-0 w-56 bg-white/4 border border-white/8 rounded-xl p-4 hover:border-yellow-400/20 hover:bg-white/6 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300 cursor-pointer text-left focus:outline-none focus:border-yellow-400/40"
     >
       <div className="flex justify-between items-center mb-3">
         <span className="text-[10px] text-white/40 font-mono tracking-wider">{match.date} · {match.time}</span>
@@ -34,7 +36,7 @@ function MatchCard({ match, index }: { match: typeof MATCHES[0], index: number }
       </div>
       <div className="flex items-center justify-between mb-3">
         <div className="text-center flex-1">
-          <div className="text-xl mb-1">{match.homeFlag}</div>
+          <div className="text-xl mb-1" aria-hidden="true">{match.homeFlag}</div>
           <div className="text-white text-xs font-bold" style={{ letterSpacing: '0.02em' }}>{match.home}</div>
         </div>
         <div className="px-3">
@@ -43,12 +45,12 @@ function MatchCard({ match, index }: { match: typeof MATCHES[0], index: number }
           </div>
         </div>
         <div className="text-center flex-1">
-          <div className="text-xl mb-1">{match.awayFlag}</div>
+          <div className="text-xl mb-1" aria-hidden="true">{match.awayFlag}</div>
           <div className="text-white text-xs font-bold" style={{ letterSpacing: '0.02em' }}>{match.away}</div>
         </div>
       </div>
       <p className="text-white/30 text-[10px] font-mono truncate" style={{ letterSpacing: '0.01em' }}>{match.venue}</p>
-    </motion.div>
+    </motion.button>
   );
 }
 
@@ -171,8 +173,8 @@ export default function Home() {
           >
             <h2 className="text-[11px] font-mono font-bold text-yellow-400 tracking-widest uppercase" style={{ letterSpacing: '0.12em' }}>World Cup 2026 — Upcoming Fixtures</h2>
           </motion.div>
-          <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-            {MATCHES.map((match, i) => <MatchCard key={i} match={match} index={i} />)}
+          <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar" role="list" aria-label="Upcoming World Cup fixtures">
+            {MATCHES.map((match, i) => <MatchCard key={i} match={match} index={i} onClick={() => navigate('/tickets')} />)}
           </div>
         </div>
       </section>
@@ -245,7 +247,7 @@ export default function Home() {
                   { tag: 'Injection-Proof', title: 'Secure by design', desc: 'XML-delimited prompts and keyword detection block all jailbreak attempts, keeping every agent strictly focused on World Cup 2026 logistics.' },
                   { tag: 'Instant Answers', title: 'Unfolding explanations', desc: 'Instantly view pre-verified answers or ask our smart orchestrator complex logistics queries with real-time feedback.' },
                 ].map(({ tag, title, desc }) => (
-                  <div key={tag} className="pl-4 border-l border-white/10 hover:border-yellow-400/30 transition-colors cursor-pointer">
+                  <div key={tag} className="pl-4 border-l border-white/10 hover:border-yellow-400/30 transition-colors">
                     <p className="text-[10px] font-mono text-yellow-400 uppercase tracking-widest mb-1.5" style={{ letterSpacing: '0.1em' }}>{tag}</p>
                     <h3 className="text-white font-bold text-base mb-2" style={{ letterSpacing: '0.01em', lineHeight: '1.4' }}>{title}</h3>
                     <p className="text-slate-500 text-sm leading-relaxed" style={{ letterSpacing: '0.01em' }}>{desc}</p>

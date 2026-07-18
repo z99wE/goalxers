@@ -33,7 +33,7 @@ describe('GenAIAssistant', () => {
     const input = screen.getByPlaceholderText(/Ask about tickets, stadiums, schedules/i);
     fireEvent.change(input, { target: { value: 'Hi' } });
     
-    const sendBtn = screen.getByRole('button', { name: /↑/i });
+    const sendBtn = screen.getByRole('button', { name: /send message/i });
     fireEvent.click(sendBtn);
     
     await waitFor(() => {

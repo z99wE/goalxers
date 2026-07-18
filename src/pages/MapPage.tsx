@@ -72,7 +72,13 @@ function NavigationAssistant({ selectedStadium }: { selectedStadium: typeof STAD
           <p className="text-white/35 text-xs mt-0.5" style={{ letterSpacing: '0.01em' }}>{selectedStadium.city} · {selectedStadium.capacity} cap</p>
         )}
       </div>
-      <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-3 no-scrollbar min-h-0">
+      <div 
+        className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-3 no-scrollbar min-h-0 focus:outline-none focus:ring-1 focus:ring-yellow-400/30"
+        tabIndex={0}
+        role="log"
+        aria-live="polite"
+        aria-label="Navigation agent chat history"
+      >
         {messages.map((m, i) => (
           <div key={i} className={`max-w-[90%] px-4 py-3 rounded-xl text-sm leading-relaxed ${
             m.role === 'ai'
@@ -83,7 +89,7 @@ function NavigationAssistant({ selectedStadium }: { selectedStadium: typeof STAD
           </div>
         ))}
         {loading && (
-          <div className="self-start flex gap-1.5 px-4 py-3 bg-white/5 border border-white/8 rounded-xl">
+          <div className="self-start flex gap-1.5 px-4 py-3 bg-white/5 border border-white/8 rounded-xl" role="status" aria-label="Agent is looking up route">
             <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full typing-dot" />
             <span className="w-1.5 h-1.5 bg-yellow-400/60 rounded-full typing-dot" />
             <span className="w-1.5 h-1.5 bg-yellow-400/30 rounded-full typing-dot" />
@@ -93,7 +99,7 @@ function NavigationAssistant({ selectedStadium }: { selectedStadium: typeof STAD
       <div className="px-3 py-2 border-t border-white/5 flex gap-2 overflow-x-auto no-scrollbar flex-shrink-0">
         {quickQueries.map(q => (
           <button key={q} onClick={() => send(q)} disabled={loading}
-            className="flex-shrink-0 px-3 py-1.5 text-[11px] rounded-full bg-white/4 text-white/45 border border-white/8 hover:bg-yellow-400/10 hover:text-yellow-400 hover:border-yellow-400/25 transition-all cursor-pointer font-mono whitespace-nowrap disabled:opacity-30">
+            className="flex-shrink-0 px-3 py-1.5 text-[11px] rounded-full bg-white/4 text-white/45 border border-white/8 hover:bg-yellow-400/10 hover:text-yellow-400 hover:border-yellow-400/25 transition-all cursor-pointer font-mono whitespace-nowrap disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-yellow-400/50">
             {q}
           </button>
         ))}
@@ -102,11 +108,13 @@ function NavigationAssistant({ selectedStadium }: { selectedStadium: typeof STAD
         <input
           value={input} onChange={e => setInput(e.target.value)}
           placeholder="Ask about transport, parking, access…"
+          aria-label="Message to navigation agent"
           className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-yellow-400/40 transition-all font-sans"
           style={{ letterSpacing: '0.015em' }}
         />
         <button type="submit" disabled={!input.trim() || loading}
-          className="w-9 h-9 bg-yellow-400 text-black rounded-xl flex items-center justify-center disabled:opacity-30 hover:bg-yellow-300 transition-all cursor-pointer text-sm font-bold flex-shrink-0">
+          aria-label="Send message"
+          className="w-9 h-9 bg-yellow-400 text-black rounded-xl flex items-center justify-center disabled:opacity-30 hover:bg-yellow-300 transition-all cursor-pointer text-sm font-bold flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-yellow-400/50">
           ↑
         </button>
       </form>
@@ -160,7 +168,13 @@ export default function MapPage() {
         <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
 
           {/* Stadium list */}
-          <div className="xl:col-span-3 space-y-2 overflow-y-auto" style={{ maxHeight: '70vh' }}>
+          <div 
+            className="xl:col-span-3 space-y-2 overflow-y-auto focus:outline-none focus:ring-1 focus:ring-yellow-400/30 rounded-xl" 
+            style={{ maxHeight: '70vh' }}
+            tabIndex={0}
+            role="region"
+            aria-label="Host stadiums list"
+          >
             {filtered.map((s, i) => (
               <motion.button
                 key={s.id}

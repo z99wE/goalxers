@@ -90,7 +90,8 @@ export default function StadiumBackground({ onSectionSelect, selectedSection }: 
               whileTap={{ scale: 0.95 }}
               onClick={() => onSectionSelect(section.id)}
               style={{ left: section.x, top: section.y }}
-              className="absolute transform -translate-x-1/2 -translate-y-1/2 group"
+              className="absolute transform -translate-x-1/2 -translate-y-1/2 group focus:outline-none"
+              aria-label={`Select Section ${section.label} - ${section.price}`}
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
             >
@@ -99,12 +100,12 @@ export default function StadiumBackground({ onSectionSelect, selectedSection }: 
                 <div className="absolute inset-0 bg-[#00f0ff] rounded-full animate-ping opacity-20 group-hover:opacity-60 duration-1000"></div>
                 
                 {/* Pin core */}
-                <div className="w-10 h-10 rounded-full glass-panel border border-[#00f0ff]/50 flex items-center justify-center relative shadow-[0_0_20px_rgba(0,240,255,0.3)] group-hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] group-hover:border-[#00f0ff] transition-all">
+                <div className="w-10 h-10 rounded-full glass-panel border border-[#00f0ff]/50 flex items-center justify-center relative shadow-[0_0_20px_rgba(0,240,255,0.3)] group-hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] group-hover:border-[#00f0ff] group-focus:border-[#00f0ff] group-focus:shadow-[0_0_30px_rgba(0,240,255,0.6)] transition-all">
                    <MapPin weight="fill" className="text-[#00f0ff] text-xl" />
                 </div>
                 
-                {/* Tooltip */}
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 glass-panel px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none w-max flex flex-col items-center">
+                {/* Tooltip — visible on hover or focus */}
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 glass-panel px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none w-max flex flex-col items-center">
                    <span className="text-[10px] uppercase tracking-widest text-slate-400">Section {section.label}</span>
                    <span className="text-sm font-bold text-white">{section.price}</span>
                 </div>

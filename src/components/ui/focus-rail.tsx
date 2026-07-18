@@ -201,7 +201,7 @@ export function FocusRail({
               <motion.div
                 key={absIndex}
                 className={cn(
-                  "absolute aspect-[3/4] w-[260px] md:w-[300px] rounded-2xl border-t border-white/20 bg-neutral-900 shadow-2xl transition-shadow duration-300",
+                  "absolute aspect-[3/4] w-[260px] md:w-[300px] rounded-2xl border-t border-white/20 bg-neutral-900 shadow-2xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-400/50",
                   isCenter ? "z-20 shadow-white/10" : "z-10"
                 )}
                 initial={false}
@@ -219,6 +219,15 @@ export function FocusRail({
                  }}
                 style={{
                   transformStyle: "preserve-3d",
+                }}
+                role="button"
+                tabIndex={0}
+                aria-label={`Select ${item.title}`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    if (offset !== 0) setActive((p) => p + offset);
+                  }
                 }}
                 onClick={() => {
                   if (offset !== 0) setActive((p) => p + offset);

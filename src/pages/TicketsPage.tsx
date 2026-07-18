@@ -91,7 +91,13 @@ function TicketAssistant() {
           Find Your Perfect Ticket
         </h3>
       </div>
-      <div className="h-56 overflow-y-auto px-4 py-4 flex flex-col gap-3 no-scrollbar">
+      <div 
+        className="h-56 overflow-y-auto px-4 py-4 flex flex-col gap-3 no-scrollbar focus:outline-none focus:ring-1 focus:ring-yellow-400/30"
+        tabIndex={0}
+        role="log"
+        aria-live="polite"
+        aria-label="Ticket agent chat history"
+      >
         {messages.map((m, i) => (
           <div key={i} className={`max-w-[88%] px-4 py-2.5 rounded-xl text-sm leading-relaxed ${
             m.role === 'ai'
@@ -102,7 +108,7 @@ function TicketAssistant() {
           </div>
         ))}
         {loading && (
-          <div className="self-start flex gap-1.5 px-4 py-2.5 bg-white/5 border border-white/8 rounded-xl">
+          <div className="self-start flex gap-1.5 px-4 py-2.5 bg-white/5 border border-white/8 rounded-xl" role="status" aria-label="Agent is typing">
             <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full typing-dot" />
             <span className="w-1.5 h-1.5 bg-yellow-400/60 rounded-full typing-dot" />
             <span className="w-1.5 h-1.5 bg-yellow-400/30 rounded-full typing-dot" />
@@ -112,7 +118,7 @@ function TicketAssistant() {
       <div className="px-3 py-2 border-t border-white/5 flex gap-2 overflow-x-auto no-scrollbar">
         {['World Cup Final tickets', 'Family tickets under $300', 'VIP hospitality options'].map(s => (
           <button key={s} onClick={() => send(s)} disabled={loading}
-            className="flex-shrink-0 px-3 py-1.5 text-[11px] rounded-full bg-white/4 text-white/45 border border-white/8 hover:bg-yellow-400/10 hover:text-yellow-400 hover:border-yellow-400/25 transition-all disabled:opacity-30 cursor-pointer font-mono whitespace-nowrap">
+            className="flex-shrink-0 px-3 py-1.5 text-[11px] rounded-full bg-white/4 text-white/45 border border-white/8 hover:bg-yellow-400/10 hover:text-yellow-400 hover:border-yellow-400/25 transition-all disabled:opacity-30 cursor-pointer font-mono whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-yellow-400/50">
             {s}
           </button>
         ))}
@@ -122,11 +128,13 @@ function TicketAssistant() {
           value={input}
           onChange={e => setInput(e.target.value)}
           placeholder="e.g. 2 tickets USA vs Mexico, budget $600…"
+          aria-label="Message to ticketing agent"
           className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-yellow-400/40 transition-all font-sans"
           style={{ letterSpacing: '0.015em' }}
         />
         <button type="submit" disabled={!input.trim() || loading}
-          className="w-9 h-9 bg-yellow-400 text-black rounded-xl flex items-center justify-center disabled:opacity-30 hover:bg-yellow-300 transition-all cursor-pointer font-bold text-sm flex-shrink-0">
+          aria-label="Send message"
+          className="w-9 h-9 bg-yellow-400 text-black rounded-xl flex items-center justify-center disabled:opacity-30 hover:bg-yellow-300 transition-all cursor-pointer font-bold text-sm flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-yellow-400/50">
           ↑
         </button>
       </form>
@@ -202,15 +210,18 @@ export default function TicketsPage() {
             </h2>
             <div className="space-y-2">
               {FEATURED_MATCHES.map((m, i) => (
-                <motion.div
+                <motion.button
                   key={i}
+                  type="button"
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/6 bg-white/2 hover:border-yellow-400/20 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(250,204,21,0.04)] transition-all duration-300 cursor-pointer"
+                  className="w-full text-left group flex items-center justify-between px-6 py-4 rounded-xl border border-white/6 bg-white/2 hover:border-yellow-400/20 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(250,204,21,0.04)] transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-yellow-400/50"
+                  onClick={() => {}}
+                  aria-label={`Select match ${m.teams} at ${m.venue} on ${m.date}`}
                 >
                   <div className="flex items-center gap-4">
-                    <span className="text-2xl">{m.country}</span>
+                    <span className="text-2xl" role="img" aria-label="Flag or Ball">{m.country}</span>
                     <div>
                       <p className="text-[10px] text-white/35 font-mono uppercase tracking-wider mb-0.5">{m.match}</p>
                       <p className="text-white text-sm font-semibold" style={{ letterSpacing: '0.01em' }}>{m.teams}</p>
@@ -221,7 +232,7 @@ export default function TicketsPage() {
                     <p className="text-yellow-400 font-black text-base" style={{ fontFamily: "'Barlow Condensed', sans-serif" }}>From {m.price}</p>
                     <p className="text-[10px] text-slate-600 font-mono uppercase tracking-wider group-hover:text-yellow-400/60 transition-colors">Select →</p>
                   </div>
-                </motion.div>
+                </motion.button>
               ))}
             </div>
           </section>

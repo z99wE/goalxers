@@ -65,7 +65,11 @@ export default function StadiumMap({ stadiums, selectedStadium, onSelectStadium 
   const activeZoom = selectedStadium ? 13 : defaultZoom;
 
   return (
-    <div className="w-full h-[320px] rounded-2xl overflow-hidden border border-white/8 relative z-10 shadow-lg">
+    <div 
+      className="w-full h-[320px] rounded-2xl overflow-hidden border border-white/8 relative z-10 shadow-lg"
+      role="application"
+      aria-label="Interactive map showing FIFA World Cup 2026 stadiums"
+    >
       <MapContainer
         center={activeCenter}
         zoom={activeZoom}
