@@ -89,12 +89,15 @@ fifa-stadium/
 | Practice | Implementation |
 |---|---|
 | **Component isolation** | Each page (`Home`, `MapPage`, `TicketsPage`, `AssistantPage`, `HowItWorksPage`) is a self-contained module. Shared UI lives in `components/`. Data lives in `data/`. Services live in `services/`. No cross-layer imports. |
+| **Monolith refactoring** | Complex pages like `Home.tsx` are structurally decomposed into modular, highly-readable sub-components (`HeroSection`, `MatchTicker`, `StatsBand`, etc.) strictly within the same file to preserve routing boundaries while maximizing readability and maintainability. |
 | **Strict TypeScript** | The entire frontend compiles under `tsc -b` with zero errors. Interfaces are explicitly defined for `Stadium`, `Ticket`, `ChatMessage`, `AgentIntent`, and `AgentActivity`. No `any` types in component props. |
 | **Config-driven prompts** | All LLM system prompts are centralized in `services/prompts.ts` — a single file covers ticketing rules, navigation context, and FAQ boundaries. Updating World Cup logistics requires editing one file, not scattered inline strings. |
 | **Linter-clean codebase** | `oxlint` runs 103 rules across 42 files and reports **0 warnings, 0 errors**. Unused variables, unreachable code, and implicit `any` types are all caught at lint time. |
+| **Robust error handling** | Zero "swallowed" exceptions. All `try/catch` blocks in API services (`LLMProvider.ts`, `Orchestrator.ts`) and UI components (`GenAIAssistant.tsx`) explicitly handle or log errors, ensuring high observability and maintainability during debugging without crashing the user interface. |
 | **Lazy-loaded routes** | All five page components are loaded via `React.lazy()` with `Suspense` fallbacks, keeping the initial bundle small and splitting code by route. |
 | **Reusable ChatPanel** | The `ChatPanel.tsx` component is used by both the AI Assistant page and the Map page's Navigation Agent — same interface, different agent backends. No duplicated chat UI code. |
 | **Consistent naming** | Files follow PascalCase for components, camelCase for services, and kebab-case for CSS utilities. Directory names match their conceptual layer (`pages/`, `components/`, `services/`, `data/`, `test/`). |
+| **JSDoc documentation** | All major components and utility functions are documented with standard JSDoc comments to ensure rapid developer onboarding and scalable code understanding. |
 
 ---
 
