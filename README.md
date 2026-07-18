@@ -209,4 +209,4 @@ The app runs without API keys — AI features gracefully degrade while the UI re
 
 ## License
 
-This project was built for the FIFA World Cup 2026 hackathon.
+This project was built for a hackathon.
