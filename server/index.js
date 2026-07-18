@@ -166,4 +166,5 @@ app.use((err, req, res, _next) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`Environment variables check - GROQ: ${!!process.env.GROQ_API_KEY}, NIM: ${!!process.env.NIM_API_KEY}`);
 });
