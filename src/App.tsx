@@ -98,14 +98,14 @@ function App() {
           <div className="absolute left-6 bottom-4 flex gap-4 pointer-events-auto">
             <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-[0.12] rotate-[-6deg] hover:rotate-0 hover:opacity-75 hover:scale-110 transition-all duration-500 shadow-2xl">
               <img 
-                src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=200" 
+                src="/fan_1.jpg" 
                 alt="CheerTribe Fans Left" 
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-[0.12] rotate-[4deg] hover:rotate-0 hover:opacity-75 hover:scale-110 transition-all duration-500 shadow-2xl hidden sm:block">
               <img 
-                src="https://images.unsplash.com/photo-1486286701208-1d58e9338013?auto=format&fit=crop&q=80&w=200" 
+                src="/fan_2.jpg" 
                 alt="CheerTribe Fans Left Inner" 
                 className="w-full h-full object-cover"
               />
@@ -116,14 +116,14 @@ function App() {
           <div className="absolute right-6 bottom-4 flex gap-4 pointer-events-auto">
             <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-[0.12] rotate-[-4deg] hover:rotate-0 hover:opacity-75 hover:scale-110 transition-all duration-500 shadow-2xl hidden sm:block">
               <img 
-                src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=200" 
+                src="/fan_3.jpg" 
                 alt="CheerTribe Fans Right Inner" 
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-[0.12] rotate-[8deg] hover:rotate-0 hover:opacity-75 hover:scale-110 transition-all duration-500 shadow-2xl">
               <img 
-                src="https://images.unsplash.com/photo-1518098268026-4e66f1a9c869?auto=format&fit=crop&q=80&w=200" 
+                src="/fan_4.jpg" 
                 alt="CheerTribe Fans Right" 
                 className="w-full h-full object-cover"
               />
