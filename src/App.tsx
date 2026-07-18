@@ -82,8 +82,8 @@ function App() {
           <RouteWrapper />
         </Suspense>
 
-        {/* Footer with faded penalty box */}
-        <footer className="relative w-full h-48 border-t border-white/5 bg-[#050508] overflow-hidden mt-20 flex items-center justify-center">
+        {/* Footer with faded penalty box & interactive fan photos */}
+        <footer className="relative w-full h-56 border-t border-white/5 bg-[#050508] overflow-hidden mt-20 flex items-center justify-center">
           <div className="absolute inset-0 flex justify-center pointer-events-none opacity-[0.03] select-none">
             <svg className="w-full max-w-4xl h-full" viewBox="0 0 800 200" fill="none" xmlns="http://www.w3.org/2000/svg">
               <line x1="0" y1="200" x2="800" y2="200" stroke="white" strokeWidth="2" />
@@ -93,6 +93,43 @@ function App() {
               <path d="M 340 50 A 70 70 0 0 1 460 50" stroke="white" strokeWidth="2" strokeDasharray="6,6" />
             </svg>
           </div>
+
+          {/* Interactive Fan Photos on Left */}
+          <div className="absolute left-6 bottom-4 flex gap-4 pointer-events-auto">
+            <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-[0.12] rotate-[-6deg] hover:rotate-0 hover:opacity-75 hover:scale-110 transition-all duration-500 shadow-2xl">
+              <img 
+                src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=200" 
+                alt="CheerTribe Fans Left" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-[0.12] rotate-[4deg] hover:rotate-0 hover:opacity-75 hover:scale-110 transition-all duration-500 shadow-2xl hidden sm:block">
+              <img 
+                src="https://images.unsplash.com/photo-1486286701208-1d58e9338013?auto=format&fit=crop&q=80&w=200" 
+                alt="CheerTribe Fans Left Inner" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Interactive Fan Photos on Right */}
+          <div className="absolute right-6 bottom-4 flex gap-4 pointer-events-auto">
+            <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-[0.12] rotate-[-4deg] hover:rotate-0 hover:opacity-75 hover:scale-110 transition-all duration-500 shadow-2xl hidden sm:block">
+              <img 
+                src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=200" 
+                alt="CheerTribe Fans Right Inner" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-[0.12] rotate-[8deg] hover:rotate-0 hover:opacity-75 hover:scale-110 transition-all duration-500 shadow-2xl">
+              <img 
+                src="https://images.unsplash.com/photo-1518098268026-4e66f1a9c869?auto=format&fit=crop&q=80&w=200" 
+                alt="CheerTribe Fans Right" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
           <div className="text-center relative z-10 text-[9px] font-mono tracking-[0.2em] text-white/20 uppercase select-none">
             © 2026 CHEERTRIBE · EVERY MATCH. ONE PLATFORM.
           </div>

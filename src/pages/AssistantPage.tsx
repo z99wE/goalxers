@@ -35,7 +35,7 @@ export default function AssistantPage() {
             </div>
 
             {/* Premium Supporter Card */}
-            <div className="bg-white/3 border border-white/8 rounded-2xl p-6">
+            <div className="bg-white/3 border border-white/8 rounded-2xl p-6 hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300">
               <h3 className="text-white font-bold text-sm mb-3" style={{ letterSpacing: '0.01em' }}>Join the Tribe</h3>
               <p className="text-slate-400 text-xs leading-relaxed mb-4" style={{ letterSpacing: '0.01em' }}>
                 CheerTribe connects fans across all 16 host cities. Tap into live stadium guides, match fixtures, and transport details.
@@ -43,7 +43,7 @@ export default function AssistantPage() {
               <div className="space-y-2">
                 {[
                   '16 Host Cities Supported',
-                  'Instant Audio STT Transcription',
+                  'Instant Multi-Agent Routing',
                   'Grounded World Cup 2026 Data',
                 ].map((perk) => (
                   <div key={perk} className="flex items-center gap-2 text-slate-300 text-xs">

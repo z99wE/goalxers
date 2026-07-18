@@ -62,7 +62,7 @@ function NavigationAssistant({ selectedStadium }: { selectedStadium: typeof STAD
     : ['How to get to MetLife Stadium', 'Transport from NYC to AT&T Stadium', 'Accessibility at Azteca'];
 
   return (
-    <div className="bg-[#0a0a10] border border-white/8 rounded-2xl overflow-hidden h-full flex flex-col">
+    <div className="bg-[#0a0a10] border border-white/8 rounded-2xl overflow-hidden h-full flex flex-col hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300">
       <div className="px-5 py-4 border-b border-white/6 flex-shrink-0">
         <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-0.5">Navigation Agent</p>
         <h3 className="text-white font-black text-lg" style={{ fontFamily: "'Barlow Condensed', sans-serif", letterSpacing: '0.02em' }}>
@@ -168,7 +168,7 @@ export default function MapPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.04 }}
                 onClick={() => setSelected(s)}
-                className={`w-full text-left flex items-center justify-between px-5 py-4 rounded-xl border transition-all cursor-pointer ${
+                className={`w-full text-left flex items-center justify-between px-5 py-4 rounded-xl border transition-all cursor-pointer hover:-translate-y-0.5 hover:border-yellow-400/20 hover:shadow-[0_8px_30px_rgba(250,204,21,0.04)] ${
                   selected?.id === s.id
                     ? 'border-yellow-400/40 bg-yellow-400/5'
                     : 'border-white/6 bg-white/2 hover:border-white/14 hover:bg-white/4'
@@ -202,7 +202,7 @@ export default function MapPage() {
                 key={selected.id}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-[#0a0a10] border border-white/8 rounded-2xl p-5 flex-shrink-0"
+                className="bg-[#0a0a10] border border-white/8 rounded-2xl p-5 flex-shrink-0 hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300"
               >
                 <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-3">Stadium Details</p>
                 <div className="grid grid-cols-2 gap-3">

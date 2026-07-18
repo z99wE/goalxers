@@ -25,7 +25,7 @@ function MatchCard({ match, index }: { match: typeof MATCHES[0], index: number }
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
-      className="flex-shrink-0 w-56 bg-white/4 border border-white/8 rounded-xl p-4 hover:border-white/16 hover:bg-white/6 transition-all duration-300 cursor-pointer"
+      className="flex-shrink-0 w-56 bg-white/4 border border-white/8 rounded-xl p-4 hover:border-yellow-400/20 hover:bg-white/6 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300 cursor-pointer"
     >
       <div className="flex justify-between items-center mb-3">
         <span className="text-[10px] text-white/40 font-mono tracking-wider">{match.date} · {match.time}</span>
@@ -254,7 +254,7 @@ export default function Home() {
                 {[
                   { tag: 'Multi-Agent Routing', title: 'Each question routed to the right expert', desc: 'Ticketing, navigation, and schedule queries are classified by intent and sent to a specialized agent — so you always get the most accurate answer for your specific need.' },
                   { tag: 'Injection-Proof', title: 'Secure by design', desc: 'XML-delimited prompts and keyword detection block all jailbreak attempts, keeping every agent strictly focused on World Cup 2026 logistics.' },
-                  { tag: 'Voice-First', title: 'Speak, listen, get answers', desc: 'Deepgram converts your speech to text in under 300ms. Sarvam AI reads responses back in natural voice — no typing required at match day.' },
+                  { tag: 'Instant Answers', title: 'Unfolding explanations', desc: 'Instantly view pre-verified answers or ask our smart orchestrator complex logistics queries with real-time feedback.' },
                 ].map(({ tag, title, desc }) => (
                   <div key={tag} className="pl-4 border-l border-white/10 hover:border-yellow-400/30 transition-colors cursor-pointer">
                     <p className="text-[10px] font-mono text-yellow-400 uppercase tracking-widest mb-1.5" style={{ letterSpacing: '0.1em' }}>{tag}</p>
@@ -293,7 +293,7 @@ export default function Home() {
               '50,000+ AI Queries Answered',
               '16 Host Cities Mapped',
               '99.9% Agent Uptime',
-              'Deepgram + Sarvam Powered',
+              'Multi-Agent System',
             ].map(item => (
               <div key={item} className="flex items-center gap-2 text-slate-400" style={{ letterSpacing: '0.01em' }}>
                 <span className="text-yellow-400 font-bold flex-shrink-0">—</span>
@@ -307,7 +307,8 @@ export default function Home() {
       {/* ═══════════════════════════════════════
           FOOTER — D-BOX FIELD GRADIENT
       ════════════════════════════════════════ */}
-      <footer className="relative mt-20 overflow-hidden">
+      {/* Ready for kick-off Call to Action */}
+      <section className="relative py-20 overflow-hidden bg-[#050508]">
         {/* The D-box arc shape */}
         <div className="relative h-80 flex flex-col items-center justify-center">
           {/* Green field gradient arc */}
@@ -340,11 +341,7 @@ export default function Home() {
             </button>
           </div>
         </div>
-        
-        <div className="bg-[#030305] border-t border-white/5 py-6 px-4 text-center">
-          <p className="text-slate-600 text-xs">© 2026 CheerTribe Intelligence Platform · Not affiliated with FIFA · Built for World Cup 2026</p>
-        </div>
-      </footer>
+      </section>
     </div>
   );
 }

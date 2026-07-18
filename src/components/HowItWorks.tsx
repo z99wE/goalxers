@@ -85,7 +85,7 @@ export default function HowItWorks() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 * idx }}
-            className="glass-panel p-8 rounded-3xl flex flex-col gap-5 border border-white/5 hover:border-white/10 transition-all bg-[#0a0a10] backdrop-blur-md"
+            className="glass-panel p-8 rounded-3xl flex flex-col gap-5 border border-white/5 bg-[#0a0a10] backdrop-blur-md hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300"
           >
             <div>
               <h3 className="text-lg font-extrabold text-white tracking-wide uppercase font-sans mb-2 border-b border-white/5 pb-2">

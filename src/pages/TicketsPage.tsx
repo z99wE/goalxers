@@ -85,7 +85,7 @@ function TicketAssistant() {
   };
 
   return (
-    <div className="bg-[#0a0a10] border border-white/8 rounded-2xl overflow-hidden">
+    <div className="bg-[#0a0a10] border border-white/8 rounded-2xl overflow-hidden hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300">
       <div className="px-6 py-4 border-b border-white/6">
         <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-0.5">Ticketing Agent</p>
         <h3 className="text-white font-black text-lg" style={{ fontFamily: "'Barlow Condensed', sans-serif", letterSpacing: '0.02em' }}>
@@ -172,7 +172,7 @@ export default function TicketsPage() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.06 }}
                   onClick={() => setSelectedCategory(selectedCategory === cat.id ? null : cat.id)}
-                  className={`w-full text-left flex items-center justify-between px-6 py-4 rounded-xl border transition-all cursor-pointer ${
+                  className={`w-full text-left flex items-center justify-between px-6 py-4 rounded-xl border transition-all cursor-pointer hover:-translate-y-0.5 hover:border-yellow-400/20 hover:shadow-[0_8px_30px_rgba(250,204,21,0.04)] ${
                     selectedCategory === cat.id
                       ? 'border-yellow-400/40 bg-yellow-400/5'
                       : 'border-white/8 bg-white/3 hover:border-white/16 hover:bg-white/5'
@@ -208,7 +208,7 @@ export default function TicketsPage() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/6 bg-white/2 hover:border-white/14 hover:bg-white/4 transition-all cursor-pointer"
+                  className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/6 bg-white/2 hover:border-yellow-400/20 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(250,204,21,0.04)] transition-all duration-300 cursor-pointer"
                 >
                   <div className="flex items-center gap-4">
                     <span className="text-2xl">{m.country}</span>
@@ -245,7 +245,7 @@ export default function TicketsPage() {
           </div>
 
           {/* Info box */}
-          <div className="bg-white/3 border border-white/8 rounded-2xl p-6">
+          <div className="bg-white/3 border border-white/8 rounded-2xl p-6 hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300">
             <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-3">Purchase Info</p>
             <div className="space-y-3">
               {[
