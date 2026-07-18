@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -6,11 +6,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Navigation from './components/Navigation';
 import NewsTicker from './components/NewsTicker';
 import { FocusRail } from './components/ui/focus-rail';
-import Home from './pages/Home';
-import MapPage from './pages/MapPage';
-import TicketsPage from './pages/TicketsPage';
-import AssistantPage from './pages/AssistantPage';
-import HowItWorksPage from './pages/HowItWorksPage';
+
+// Lazy-load all pages so each gets its own async chunk (code-splitting)
+const Home = lazy(() => import('./pages/Home'));
+const MapPage = lazy(() => import('./pages/MapPage'));
+const TicketsPage = lazy(() => import('./pages/TicketsPage'));
+const AssistantPage = lazy(() => import('./pages/AssistantPage'));
+const HowItWorksPage = lazy(() => import('./pages/HowItWorksPage'));
 
 const pageVariants = {
   initial: { opacity: 0, y: 16 },

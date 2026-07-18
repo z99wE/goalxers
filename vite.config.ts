@@ -49,5 +49,29 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       include: ['src/components/**/*.tsx', 'src/services/**/*.ts'],
     }
-  }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            // Three.js ecosystem — heaviest lib, isolate for caching
+            if (id.includes('three') || id.includes('@react-three')) {
+              return 'vendor-three';
+            }
+            // Animation library
+            if (id.includes('framer-motion')) {
+              return 'vendor-motion';
+            }
+            // React core
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'vendor-react';
+            }
+          }
+        },
+      },
+    },
+    // Warn when any individual chunk exceeds 500KB
+    chunkSizeWarningLimit: 500,
+  },
 })

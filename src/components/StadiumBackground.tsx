@@ -63,6 +63,8 @@ export default function StadiumBackground({ onSectionSelect, selectedSection }: 
         <img 
           src="/assets/stadium_bg.png" 
           alt="Stadium Background" 
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover opacity-90 transition-opacity duration-1000"
           style={{ 
              filter: selectedSection ? 'brightness(0.7) blur(2px)' : 'brightness(1) blur(0px)',
