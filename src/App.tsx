@@ -1,0 +1,87 @@
+import { Suspense } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { AnimatePresence, motion } from 'framer-motion';
+
+import Navigation from './components/Navigation';
+import Home from './pages/Home';
+import MapPage from './pages/MapPage';
+import TicketsPage from './pages/TicketsPage';
+import AssistantPage from './pages/AssistantPage';
+import HowItWorksPage from './pages/HowItWorksPage';
+
+const pageVariants = {
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+  exit: { opacity: 0, y: -8, transition: { duration: 0.25 } },
+};
+
+function PageWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+      {children}
+    </motion.div>
+  );
+}
+
+function RouteWrapper() {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+        <Route path="/map" element={<PageWrapper><MapPage /></PageWrapper>} />
+        <Route path="/tickets" element={<PageWrapper><TicketsPage /></PageWrapper>} />
+        <Route path="/assistant" element={<PageWrapper><AssistantPage /></PageWrapper>} />
+        <Route path="/how-it-works" element={<PageWrapper><HowItWorksPage /></PageWrapper>} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <div className="relative w-screen min-h-screen overflow-x-hidden bg-[#050508] text-white font-sans">
+        {/* Ambient glow blobs — always visible */}
+        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-yellow-400/5 rounded-full blur-[120px]" />
+          <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
+        </div>
+
+        <Toaster 
+          position="top-center"
+          toastOptions={{
+            style: {
+              background: '#0c0c12',
+              color: '#f8fafc',
+              border: '1px solid rgba(250,204,21,0.2)',
+              borderRadius: '12px',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+              fontSize: '0.875rem',
+              fontFamily: 'Inter, sans-serif',
+            },
+            success: {
+              iconTheme: { primary: '#facc15', secondary: '#000' },
+            },
+            error: {
+              iconTheme: { primary: '#ef4444', secondary: '#fff' },
+            },
+          }}
+        />
+
+        <Navigation />
+
+        <Suspense fallback={
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-8 h-8 border-2 border-yellow-400/30 border-t-yellow-400 rounded-full animate-spin" />
+          </div>
+        }>
+          <RouteWrapper />
+        </Suspense>
+      </div>
+    </BrowserRouter>
+  );
+}
+
+export default App;

@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: fifa-stadium-app
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node server/index.js
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: DEEPGRAM_API_KEY
+        sync: false

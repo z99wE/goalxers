@@ -1,0 +1,70 @@
+{
+  "stadiums": [
+    {
+      "id": "metlife",
+      "name": "New York New Jersey Stadium",
+      "city": "East Rutherford, NJ",
+      "capacity": 82500,
+      "matches_hosted": 8,
+      "coordinates": { "lat": 40.8128, "lng": -74.0742 }
+    },
+    {
+      "id": "azteca",
+      "name": "Estadio Azteca",
+      "city": "Mexico City",
+      "capacity": 83264,
+      "matches_hosted": 5,
+      "coordinates": { "lat": 19.3029, "lng": -99.1505 }
+    },
+    {
+      "id": "bmo",
+      "name": "Toronto Stadium",
+      "city": "Toronto",
+      "capacity": 45000,
+      "matches_hosted": 6,
+      "coordinates": { "lat": 43.6332, "lng": -79.4186 }
+    }
+  ],
+  "matches": [
+    {
+      "id": "m1",
+      "team_a": "USA",
+      "team_b": "TBD",
+      "date": "2026-06-12",
+      "stadium_id": "sofi",
+      "stage": "Group Stage",
+      "status": "scheduled"
+    },
+    {
+      "id": "m_final",
+      "team_a": "TBD",
+      "team_b": "TBD",
+      "date": "2026-07-19",
+      "stadium_id": "metlife",
+      "stage": "Final",
+      "status": "scheduled"
+    }
+  ],
+  "tickets": [
+    {
+      "id": "t1",
+      "match_id": "m1",
+      "category": "Category 1",
+      "price_usd": 450,
+      "availability": "Limited"
+    },
+    {
+      "id": "t2",
+      "match_id": "m_final",
+      "category": "Category 3",
+      "price_usd": 850,
+      "availability": "Sold Out"
+    }
+  ],
+  "prompts": [
+    "Find tickets for the final match at MetLife.",
+    "Show me the match schedule for the USA.",
+    "Which stadiums are in Mexico?",
+    "Tell me about Estadio Azteca."
+  ]
+}
