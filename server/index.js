@@ -32,20 +32,23 @@ app.use(helmet({
   },
 }));
 
-// Restrict CORS to specific origins in production, or allow local in dev
-const allowedOrigins = process.env.NODE_ENV === 'production' 
-  ? [process.env.FRONTEND_URL || 'https://your-production-url.onrender.com'] // Production URL
-  : ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://127.0.0.1:5175'];
-
+// Allow CORS for the frontend on Render and local dev
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin && process.env.NODE_ENV !== 'production') {
-      // Allow requests with no origin (like mobile apps or curl requests) only in dev
+    // Allow requests with no origin (like same-origin or curl)
+    if (!origin) {
       return callback(null, true);
     }
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
+    // Allow any onrender.com subdomain or local dev
+    if (origin.endsWith('.onrender.com') || origin.includes('localhost') || origin.includes('127.0.0.1')) {
       return callback(null, true);
     }
+    
+    // Fallback for custom domains if set
+    if (process.env.FRONTEND_URL === origin) {
+      return callback(null, true);
+    }
+
     return callback(new Error('Not allowed by CORS'));
   }
 }));
