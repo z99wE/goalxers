@@ -51,20 +51,21 @@ export class ResilientLLMRouter implements ILLMProvider {
   private primary: ILLMProvider;
   private secondary: ILLMProvider;
 
-  constructor() {
-    this.primary = new GroqProvider();
-    this.secondary = new NIMProvider();
+  constructor(
+    primary: ILLMProvider,
+    secondary: ILLMProvider
+  ) {
+    this.primary = primary;
+    this.secondary = secondary;
   }
 
   async chat(messages: { role: string; content: string }[]): Promise<string> {
     try {
-      console.log('Attempting Primary LLM (Groq)...');
       return await this.primary.chat(messages);
     } catch (error) {
-      console.warn('Primary LLM failed, falling back to NIM...', error);
       return await this.secondary.chat(messages);
     }
   }
 }
 
-export const llmRouter = new ResilientLLMRouter();
+export const llmRouter = new ResilientLLMRouter(new GroqProvider(), new NIMProvider());

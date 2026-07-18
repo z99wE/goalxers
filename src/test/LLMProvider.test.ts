@@ -68,7 +68,7 @@ describe('LLMProvider', () => {
         json: async () => ({ choices: [{ message: { content: 'Groq Response' } }] }),
       });
 
-      const router = new ResilientLLMRouter();
+      const router = new ResilientLLMRouter(new GroqProvider(), new NIMProvider());
       const response = await router.chat([{ role: 'user', content: 'hello' }]);
 
       expect(response).toBe('Groq Response');
@@ -89,21 +89,13 @@ describe('LLMProvider', () => {
         json: async () => ({ choices: [{ message: { content: 'NIM Response' } }] }),
       });
 
-      const router = new ResilientLLMRouter();
-      
-      // Spy on console.warn
-      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-      
+      const router = new ResilientLLMRouter(new GroqProvider(), new NIMProvider());
       const response = await router.chat([{ role: 'user', content: 'hello' }]);
 
       expect(response).toBe('NIM Response');
       expect(mockFetch).toHaveBeenCalledTimes(2);
       expect(mockFetch).toHaveBeenNthCalledWith(1, '/api/groq/chat', expect.any(Object));
       expect(mockFetch).toHaveBeenNthCalledWith(2, '/api/nim/chat', expect.any(Object));
-      
-      expect(consoleSpy).toHaveBeenCalledWith('Primary LLM failed, falling back to NIM...', expect.any(Error));
-      
-      consoleSpy.mockRestore();
     });
   });
 });

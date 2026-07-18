@@ -2,142 +2,29 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { generateTextResponse } from '../services/aiService';
 
-// ── Data ─────────────────────────────────────────────────────────────────────
-const TICKET_CATEGORIES = [
-  {
-    id: 'cat1',
-    label: 'Category 1',
-    description: 'Prime center-pitch view — lower tier, central sections',
-    price: '$750–$1,450',
-    badge: 'Best View',
-    available: true,
-  },
-  {
-    id: 'cat2',
-    label: 'Category 2',
-    description: 'Side stands, upper tier — excellent value sightlines',
-    price: '$400–$750',
-    badge: 'Popular',
-    available: true,
-  },
-  {
-    id: 'cat3',
-    label: 'Category 3',
-    description: 'Behind-goal stands — full atmosphere, budget-friendly',
-    price: '$150–$350',
-    badge: 'Value',
-    available: true,
-  },
-  {
-    id: 'vip',
-    label: 'VIP Hospitality',
-    description: 'Executive suites, gourmet dining, pitch-view lounge, dedicated concierge',
-    price: '$2,500–$6,500',
-    badge: 'Premium',
-    available: true,
-  },
-  {
-    id: 'family',
-    label: 'Family Zone',
-    description: 'Sheltered family sections with dedicated facilities and kids programming',
-    price: '$200–$500',
-    badge: 'Family',
-    available: true,
-  },
-];
-
-const FEATURED_MATCHES = [
-  { match: 'Opening Match', teams: 'Mexico vs TBD', date: 'Jun 11, 2026', venue: 'Estadio Azteca', price: '$480', country: '🇲🇽' },
-  { match: 'Group Stage — USA Home', teams: 'USA vs TBD', date: 'Jun 12, 2026', venue: 'MetLife Stadium', price: '$520', country: '🇺🇸' },
-  { match: 'Group Stage', teams: 'Argentina vs TBD', date: 'Jun 18, 2026', venue: 'AT&T Stadium', price: '$650', country: '🇦🇷' },
-  { match: 'Round of 32', teams: 'TBD vs TBD', date: 'Jun 29, 2026', venue: 'SoFi Stadium', price: '$380', country: '⚽' },
-  { match: 'Quarterfinal', teams: 'TBD vs TBD', date: 'Jul 4, 2026', venue: 'NRG Stadium', price: '$620', country: '⚽' },
-  { match: 'Semifinal', teams: 'TBD vs TBD', date: 'Jul 14, 2026', venue: 'AT&T Stadium', price: '$940', country: '⚽' },
-  { match: 'Third Place', teams: 'TBD vs TBD', date: 'Jul 18, 2026', venue: 'Rose Bowl', price: '$720', country: '⚽' },
-  { match: 'World Cup Final', teams: 'TBD vs TBD', date: 'Jul 19, 2026', venue: 'MetLife Stadium', price: '$1,400', country: '🏆' },
-];
+import { TICKET_CATEGORIES, FEATURED_MATCHES } from '../data/tickets';
+import ChatPanel from '../components/ChatPanel';
 
 // ── AI Ticket Assistant ───────────────────────────────────────────────────────
 function TicketAssistant() {
-  const [messages, setMessages] = useState([
-    { role: 'ai', content: 'Tell me what match you want to attend, your budget, and how many tickets — I\'ll find the best options for you.' }
-  ]);
-  const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const send = async (text?: string) => {
-    const query = text || input;
-    if (!query.trim() || loading) return;
-    setInput('');
-    const updated = [...messages, { role: 'user', content: query }];
-    setMessages(updated);
-    setLoading(true);
-    try {
-      const apiMsgs = updated.map(m => ({ role: m.role === 'ai' ? 'assistant' : 'user', content: m.content }));
-      const res = await generateTextResponse(apiMsgs);
-      setMessages(prev => [...prev, { role: 'ai', content: res }]);
-    } catch {
-      setMessages(prev => [...prev, { role: 'ai', content: 'Service temporarily unavailable. Please try again.' }]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const initialMessages = [
+    { role: 'ai' as const, content: 'Tell me what match you want to attend, your budget, and how many tickets — I\'ll find the best options for you.' }
+  ];
 
   return (
-    <div className="bg-[#0a0a10] border border-white/8 rounded-2xl overflow-hidden hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300">
-      <div className="px-6 py-4 border-b border-white/6">
-        <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-0.5">Ticketing Agent</p>
-        <h3 className="text-white font-black text-lg" style={{ fontFamily: "'Barlow Condensed', sans-serif", letterSpacing: '0.02em' }}>
-          Find Your Perfect Ticket
-        </h3>
-      </div>
-      <div 
-        className="h-56 overflow-y-auto px-4 py-4 flex flex-col gap-3 no-scrollbar focus:outline-none focus:ring-1 focus:ring-yellow-400/30"
-        tabIndex={0}
-        role="log"
-        aria-live="polite"
-        aria-label="Ticket agent chat history"
-      >
-        {messages.map((m, i) => (
-          <div key={i} className={`max-w-[88%] px-4 py-2.5 rounded-xl text-sm leading-relaxed ${
-            m.role === 'ai'
-              ? 'self-start bg-white/5 border border-white/8 text-slate-200'
-              : 'self-end bg-yellow-400 text-black font-semibold'
-          }`} style={{ letterSpacing: '0.01em' }}>
-            {m.content}
-          </div>
-        ))}
-        {loading && (
-          <div className="self-start flex gap-1.5 px-4 py-2.5 bg-white/5 border border-white/8 rounded-xl" role="status" aria-label="Agent is typing">
-            <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full typing-dot" />
-            <span className="w-1.5 h-1.5 bg-yellow-400/60 rounded-full typing-dot" />
-            <span className="w-1.5 h-1.5 bg-yellow-400/30 rounded-full typing-dot" />
-          </div>
-        )}
-      </div>
-      <div className="px-3 py-2 border-t border-white/5 flex gap-2 overflow-x-auto no-scrollbar">
-        {['World Cup Final tickets', 'Family tickets under $300', 'VIP hospitality options'].map(s => (
-          <button key={s} onClick={() => send(s)} disabled={loading}
-            className="flex-shrink-0 px-3 py-1.5 text-[11px] rounded-full bg-white/4 text-white/45 border border-white/8 hover:bg-yellow-400/10 hover:text-yellow-400 hover:border-yellow-400/25 transition-all disabled:opacity-30 cursor-pointer font-mono whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-yellow-400/50">
-            {s}
-          </button>
-        ))}
-      </div>
-      <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2 px-4 py-3 border-t border-white/6">
-        <input
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          placeholder="e.g. 2 tickets USA vs Mexico, budget $600…"
-          aria-label="Message to ticketing agent"
-          className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-yellow-400/40 transition-all font-sans"
-          style={{ letterSpacing: '0.015em' }}
-        />
-        <button type="submit" disabled={!input.trim() || loading}
-          aria-label="Send message"
-          className="w-9 h-9 bg-yellow-400 text-black rounded-xl flex items-center justify-center disabled:opacity-30 hover:bg-yellow-300 transition-all cursor-pointer font-bold text-sm flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-yellow-400/50">
-          ↑
-        </button>
-      </form>
+    <div className="h-[400px]">
+      <ChatPanel
+        agentName="Ticketing Agent"
+        title="Find Your Perfect Ticket"
+        placeholder="e.g. 2 tickets USA vs Mexico, budget $600…"
+        quickQueries={['World Cup Final tickets', 'Family tickets under $300', 'VIP hospitality options']}
+        initialMessages={initialMessages}
+        onSend={async (_text, history) => {
+          const apiMsgs = history.map(m => ({ role: m.role === 'ai' ? 'assistant' as const : 'user' as const, content: m.content }));
+          return await generateTextResponse(apiMsgs);
+        }}
+        className="h-full"
+      />
     </div>
   );
 }

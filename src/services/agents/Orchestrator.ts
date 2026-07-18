@@ -17,8 +17,39 @@ export interface AgentActivity {
 
 type ActivityListener = (activity: AgentActivity) => void;
 
+class LRUCache {
+  private cache = new Map<string, string>();
+  private capacity: number;
+  
+  constructor(capacity: number = 100) {
+    this.capacity = capacity;
+  }
+
+  get(key: string): string | undefined {
+    if (!this.cache.has(key)) return undefined;
+    const value = this.cache.get(key)!;
+    this.cache.delete(key);
+    this.cache.set(key, value);
+    return value;
+  }
+
+  set(key: string, value: string) {
+    if (this.cache.has(key)) {
+      this.cache.delete(key);
+    } else if (this.cache.size >= this.capacity) {
+      const firstKey = this.cache.keys().next().value;
+      if (firstKey) this.cache.delete(firstKey);
+    }
+    this.cache.set(key, value);
+  }
+
+  has(key: string): boolean {
+    return this.cache.has(key);
+  }
+}
+
 class AgentOrchestrator {
-  private cache: Map<string, string> = new Map();
+  private cache = new LRUCache(50);
   private activityListeners: ActivityListener[] = [];
 
   // ── Subscribe to real-time agent activity ──────────────────────────

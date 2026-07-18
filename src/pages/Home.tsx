@@ -1,23 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { MATCHES, STATS, type Match } from '../data/matches';
 
-const MATCHES = [
-  { home: 'USA', away: 'Mexico', date: 'Jun 11', venue: 'Estadio Azteca', time: '19:00', score: 'LIVE', homeFlag: '🇺🇸', awayFlag: '🇲🇽' },
-  { home: 'Argentina', away: 'Brazil', date: 'Jun 18', venue: 'MetLife Stadium', time: '20:00', score: 'vs', homeFlag: '🇦🇷', awayFlag: '🇧🇷' },
-  { home: 'Germany', away: 'France', date: 'Jun 22', venue: 'AT&T Stadium', time: '18:00', score: 'vs', homeFlag: '🇩🇪', awayFlag: '🇫🇷' },
-  { home: 'England', away: 'Spain', date: 'Jun 26', venue: 'Rose Bowl', time: '21:00', score: 'vs', homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', awayFlag: '🇪🇸' },
-  { home: 'Portugal', away: 'Uruguay', date: 'Jul 1', venue: 'SoFi Stadium', time: '20:00', score: 'vs', homeFlag: '🇵🇹', awayFlag: '🇺🇾' },
-];
-
-const STATS = [
-  { label: 'Host Cities', value: '16' },
-  { label: 'Stadiums', value: '11' },
-  { label: 'Total Matches', value: '104' },
-  { label: 'Participating Teams', value: '48' },
-];
-
-function MatchCard({ match, index, onClick }: { match: typeof MATCHES[0], index: number, onClick: () => void }) {
+const MatchCard = React.memo(function MatchCard({ match, index, onClick }: { match: Match, index: number, onClick: () => void }) {
   const isLive = match.score === 'LIVE';
   return (
     <motion.button
@@ -52,7 +38,7 @@ function MatchCard({ match, index, onClick }: { match: typeof MATCHES[0], index:
       <p className="text-white/30 text-[10px] font-mono truncate" style={{ letterSpacing: '0.01em' }}>{match.venue}</p>
     </motion.button>
   );
-}
+});
 
 export default function Home() {
   const navigate = useNavigate();

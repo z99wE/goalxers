@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 
-if (process.env.NODE_ENV === 'development') {
+if (import.meta.env.DEV) {
   import('@axe-core/react').then(axe => {
     axe.default(React, createRoot, 1000);
   });
