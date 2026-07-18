@@ -1,6 +1,6 @@
-# Nexus 2026 — FIFA World Cup 2026 Intelligent Companion
+# CheerTribe 2026 — FIFA World Cup 2026 Intelligent Companion
 
-Nexus 2026 is a premium, high-fidelity web companion application designed for fans attending the **FIFA World Cup 2026** across the USA, Canada, and Mexico. Powered by a multi-agent AI orchestrator, the application provides an immersive, responsive, and seamless experience to help users navigate matches, buy tickets, find transit routes, and interact with the tournament.
+CheerTribe 2026 is a premium, high-fidelity web companion application designed for fans attending the **FIFA World Cup 2026** across the USA, Canada, and Mexico. Powered by a multi-agent AI orchestrator, the application provides an immersive, responsive, and seamless experience to help users navigate matches, buy tickets, find transit routes, and interact with the tournament.
 
 ---
 
@@ -8,7 +8,7 @@ Nexus 2026 is a premium, high-fidelity web companion application designed for fa
 
 The application directly addresses the core challenge of managing mass logistics, navigation, ticketing queries, and user experience for a multi-country, 48-team, 104-match international tournament.
 
-By combining **Procedural Web Tech (React + TypeScript + Tailwind)** with **Agentic AI Orchestration**, Nexus 2026 serves as a single unified portal that adapts contextually to users' intents, solving:
+By combining **Procedural Web Tech (React + TypeScript + Tailwind)** with **Agentic AI Orchestration**, CheerTribe 2026 serves as a single unified portal that adapts contextually to users' intents, solving:
 - **Mass Information Clutter**: Collapsing complex stadium rules, match schedules, and ticket types into a simple conversational interface.
 - **Multimodal Accessibility**: Accommodating dynamic environments (like noisy stadiums) via speech-to-text input.
 - **Offline / Transport Constraints**: Providing highly cached, lightweight transit instructions and stadium details.

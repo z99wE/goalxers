@@ -85,11 +85,15 @@ export class ResilientAudioRouter implements IAudioProvider {
 
   async synthesize(text: string): Promise<Blob> {
     try {
-      console.log('Attempting Primary Audio (Deepgram)...');
-      return await this.primary.synthesize(text);
-    } catch (error) {
-      console.warn('Primary Audio failed, falling back to Sarvam AI...', error);
+      console.log('Attempting Primary Audio (Sarvam AI)...');
       return await this.secondary.synthesize(text);
+    } catch (error) {
+      console.warn('Sarvam AI failed, falling back to Deepgram...', error);
+      try {
+        return await this.primary.synthesize(text);
+      } catch (dgErr) {
+        throw new Error(`All audio synthesis options failed. Sarvam: ${error}. Deepgram: ${dgErr}`);
+      }
     }
   }
 }

@@ -47,31 +47,35 @@ const apiLimiter = rateLimit({
 
 app.use('/api/', apiLimiter);
 
-// Server-side Deepgram Transcription proxy using raw body payload
+// Server-side Groq Whisper Transcription proxy using raw body payload
 app.post('/api/transcribe', express.raw({ type: 'audio/*', limit: '12mb' }), async (req, res) => {
   try {
-    const deepgramKey = process.env.DEEPGRAM_API_KEY;
-    if (!deepgramKey) throw new Error('Deepgram key not found in server');
+    const groqKey = process.env.GROQ_API_KEY;
+    if (!groqKey) throw new Error('Groq key not found in server');
+
+    const audioBlob = new Blob([req.body], { type: req.headers['content-type'] || 'audio/webm' });
+    const formData = new FormData();
+    formData.append('file', audioBlob, 'audio.webm');
+    formData.append('model', 'whisper-large-v3');
 
     const response = await fetch(
-      'https://api.deepgram.com/v1/listen?model=nova-2&smart_format=true',
+      'https://api.groq.com/openai/v1/audio/transcriptions',
       {
         method: 'POST',
         headers: {
-          Authorization: `Token ${deepgramKey}`,
-          'Content-Type': req.headers['content-type'] || 'audio/webm',
+          Authorization: `Bearer ${groqKey}`,
         },
-        body: req.body,
+        body: formData,
       }
     );
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Deepgram API responded with status ${response.status}: ${errorText}`);
+      throw new Error(`Groq Whisper API responded with status ${response.status}: ${errorText}`);
     }
 
     const data = await response.json();
-    const transcript = data.results?.channels[0]?.alternatives[0]?.transcript || '';
+    const transcript = data.text || '';
     res.json({ transcript });
   } catch (error) {
     console.error('Transcription Server Error:', error);
@@ -147,7 +151,7 @@ app.post('/api/sarvam/tts', async (req, res) => {
       body: JSON.stringify({
         inputs: Array.isArray(inputs) ? inputs : [inputs],
         target_language_code: target_language_code || "hi-IN",
-        speaker: "meera",
+        speaker: "anushka",
         pitch: 0,
         pace: 1.0,
         loudness: 1.5,

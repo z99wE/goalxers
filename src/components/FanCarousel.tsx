@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const FAN_IMAGES = [
   {
-    url: 'https://images.unsplash.com/photo-1504156806659-109efbf65752?auto=format&fit=crop&q=80&w=800',
+    url: '/stadium_hero.png',
     quote: 'Sport has the power to change the world. It has the power to inspire. It has the power to unite people in a way that little else does.',
     author: 'Nelson Mandela',
   },
@@ -13,7 +13,7 @@ const FAN_IMAGES = [
     author: 'Bill Shankly',
   },
   {
-    url: 'https://images.unsplash.com/photo-1431324155629-1a6edd1d1315?auto=format&fit=crop&q=80&w=800',
+    url: '/pitch_closeup.png',
     quote: 'The more difficult the victory, the greater the happiness in winning.',
     author: 'Pelé',
   },
