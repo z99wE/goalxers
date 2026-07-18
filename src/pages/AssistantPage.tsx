@@ -8,7 +8,7 @@ export default function AssistantPage() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen pt-24 pb-12 px-4 bg-[#050508]"
+      className="min-h-screen pt-24 pb-12 px-4"
     >
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-10">

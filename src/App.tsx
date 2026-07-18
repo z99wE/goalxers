@@ -87,10 +87,10 @@ function GlobalBackground() {
           <img 
             src="/global-bg.jpg" 
             alt="" 
-            className="absolute inset-0 w-full h-full object-cover opacity-15 mix-blend-luminosity saturate-50"
+            className="absolute inset-0 w-full h-full object-cover opacity-[0.45] mix-blend-luminosity saturate-50 [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)]"
           />
           {/* Heavy gradient overlay to ensure WCAG text contrast for content above */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#050508]/90 via-[#050508]/70 to-[#050508]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050508]/80 via-[#050508]/60 to-[#050508]/90 pointer-events-none" />
         </>
       )}
       {/* Ambient glow blobs — always visible */}
@@ -107,37 +107,41 @@ function App() {
         <div className="relative w-screen min-h-screen overflow-x-hidden bg-[#050508] text-white font-sans">
           <GlobalBackground />
 
-          <Toaster 
-            position="top-center"
-            toastOptions={{
-              style: {
-                background: '#0c0c12',
-                color: '#f8fafc',
-                border: '1px solid rgba(250,204,21,0.2)',
-                borderRadius: '12px',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-                fontSize: '0.875rem',
-                fontFamily: 'Inter, sans-serif',
-              },
-              success: {
-                iconTheme: { primary: '#facc15', secondary: '#000' },
-              },
-              error: {
-                iconTheme: { primary: '#ef4444', secondary: '#fff' },
-              },
-            }}
-          />
+          <div className="relative z-10 flex flex-col min-h-screen">
+            <Toaster 
+              position="top-center"
+              toastOptions={{
+                style: {
+                  background: '#0c0c12',
+                  color: '#f8fafc',
+                  border: '1px solid rgba(250,204,21,0.2)',
+                  borderRadius: '12px',
+                  boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+                  fontSize: '0.875rem',
+                  fontFamily: 'Inter, sans-serif',
+                },
+                success: {
+                  iconTheme: { primary: '#facc15', secondary: '#000' },
+                },
+                error: {
+                  iconTheme: { primary: '#ef4444', secondary: '#fff' },
+                },
+              }}
+            />
 
-          <NewsTicker />
-          <Navigation />
+            <NewsTicker />
+            <Navigation />
 
-          <Suspense fallback={
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 border-2 border-yellow-400/30 border-t-yellow-400 rounded-full animate-spin" />
-            </div>
-          }>
-            <RouteWrapper />
-          </Suspense>
+            <main className="flex-1">
+              <Suspense fallback={
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-8 h-8 border-2 border-yellow-400/30 border-t-yellow-400 rounded-full animate-spin" />
+                </div>
+              }>
+                <RouteWrapper />
+              </Suspense>
+            </main>
+          </div>
 
           <section className="relative z-10 w-full py-12 bg-[#050508] border-t border-white/5 flex flex-col items-center justify-center overflow-hidden">
             <FocusRail 

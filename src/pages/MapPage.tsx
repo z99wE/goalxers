@@ -44,7 +44,7 @@ export default function MapPage() {
   const filtered = useMemo(() => filter === 'All' ? STADIUMS : STADIUMS.filter(s => s.country === filter), [filter]);
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-4 bg-[#050508]">
+    <div className="min-h-screen pt-24 pb-16 px-4">
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}

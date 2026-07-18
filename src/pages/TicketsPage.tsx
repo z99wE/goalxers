@@ -34,7 +34,7 @@ export default function TicketsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4 bg-[#050508]">
+    <div className="min-h-screen pt-24 pb-20 px-4">
 
       {/* Hero band with pitch photo */}
       <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-16 max-w-7xl mx-auto">

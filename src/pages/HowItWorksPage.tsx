@@ -8,7 +8,7 @@ export default function HowItWorksPage() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen pt-24 pb-16 px-4 bg-[#050508]"
+      className="min-h-screen pt-24 pb-16 px-4"
     >
       <div className="w-full max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-12">
