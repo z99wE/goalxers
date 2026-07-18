@@ -22,6 +22,10 @@ vi.mock('@react-three/drei', () => ({
 
 describe('Stadium3D', () => {
   test('renders the 3D environment components safely without WebGL', () => {
+    // Suppress expected React DOM warnings about intrinsic three.js elements in jsdom
+    const originalError = console.error;
+    console.error = vi.fn();
+
     const { getByTestId, container } = render(<Stadium3D />);
     
     // Check if the canvas and environment are mocked successfully
@@ -35,5 +39,8 @@ describe('Stadium3D', () => {
     expect(container.querySelector('ambientlight')).toBeInTheDocument();
     expect(container.querySelector('directionallight')).toBeInTheDocument();
     expect(container.querySelector('pointlight')).toBeInTheDocument();
+
+    // Restore console.error
+    console.error = originalError;
   });
 });

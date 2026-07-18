@@ -6,8 +6,14 @@
 import { llmRouter } from '../llm/LLMProvider';
 import { getSystemPrompt } from '../prompts';
 
+/**
+ * Represents the classified intent of a user's query, determining which specialized agent handles it.
+ */
 export type AgentIntent = 'TICKETING' | 'NAVIGATION' | 'FAQ' | 'SCHEDULE';
 
+/**
+ * Represents an activity event emitted during the agent orchestration lifecycle.
+ */
 export interface AgentActivity {
   agent: string;
   status: 'routing' | 'thinking' | 'done' | 'fallback';
@@ -15,16 +21,31 @@ export interface AgentActivity {
   timestamp: number;
 }
 
+/**
+ * Callback function type for listening to agent activity events.
+ */
 type ActivityListener = (activity: AgentActivity) => void;
 
+/**
+ * A simple Least Recently Used (LRU) cache implementation to avoid redundant LLM calls.
+ */
 class LRUCache {
   private cache = new Map<string, string>();
   private capacity: number;
   
+  /**
+   * Initializes the LRUCache.
+   * @param capacity - The maximum number of entries before the oldest is evicted. Default is 100.
+   */
   constructor(capacity: number = 100) {
     this.capacity = capacity;
   }
 
+  /**
+   * Retrieves an item from the cache. Moves the item to the most recently used position.
+   * @param key - The cache key.
+   * @returns The cached string, or undefined if not found.
+   */
   get(key: string): string | undefined {
     if (!this.cache.has(key)) return undefined;
     const value = this.cache.get(key)!;
@@ -33,6 +54,11 @@ class LRUCache {
     return value;
   }
 
+  /**
+   * Sets an item in the cache. Evicts the oldest item if capacity is exceeded.
+   * @param key - The cache key.
+   * @param value - The value to store.
+   */
   set(key: string, value: string) {
     if (this.cache.has(key)) {
       this.cache.delete(key);
@@ -43,16 +69,31 @@ class LRUCache {
     this.cache.set(key, value);
   }
 
+  /**
+   * Checks if an item exists in the cache.
+   * @param key - The cache key.
+   * @returns true if the key exists, false otherwise.
+   */
   has(key: string): boolean {
     return this.cache.has(key);
   }
 }
 
+/**
+ * Core orchestrator that routes user queries to the appropriate LLM agent,
+ * manages caching, enforces injection defenses, and emits lifecycle events.
+ */
 class AgentOrchestrator {
   private cache = new LRUCache(50);
   private activityListeners: ActivityListener[] = [];
 
   // ── Subscribe to real-time agent activity ──────────────────────────
+  
+  /**
+   * Subscribes a listener to agent activity events (e.g., routing, thinking, fallback).
+   * @param listener - The callback function to invoke on activity.
+   * @returns A cleanup function to unsubscribe the listener.
+   */
   public onActivity(listener: ActivityListener) {
     this.activityListeners.push(listener);
     return () => {
@@ -60,6 +101,10 @@ class AgentOrchestrator {
     };
   }
 
+  /**
+   * Emits an activity event to all registered listeners.
+   * @param activity - The AgentActivity object to emit.
+   */
   private emit(activity: AgentActivity) {
     this.activityListeners.forEach(fn => fn(activity));
   }

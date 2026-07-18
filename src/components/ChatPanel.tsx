@@ -1,26 +1,50 @@
 import { useState, useRef, useEffect } from 'react';
 
+/**
+ * Represents a single message in the chat history.
+ */
 export interface ChatMessage {
   id?: string;
   role: 'user' | 'ai';
   content: string;
 }
 
+/**
+ * Props for the ChatPanel component.
+ */
 interface ChatPanelProps {
+  /** The display name of the AI agent (e.g., 'Ticketing Agent') */
   agentName: string;
+  /** The main title of the chat panel */
   title: string;
+  /** Optional subtitle for additional context */
   subtitle?: string;
+  /** Placeholder text for the input field */
   placeholder?: string;
+  /** Array of predefined queries the user can click to send instantly */
   quickQueries: string[];
+  /** Initial conversation history */
   initialMessages: ChatMessage[];
+  /** Callback fired when the user sends a message. Must return a Promise resolving to the AI response. */
   onSend: (text: string, history: ChatMessage[]) => Promise<string>;
+  /** Callback fired when the chat is cleared */
   onClear?: () => void;
+  /** Callback fired when the close button is clicked */
   onClose?: () => void;
+  /** Additional CSS classes to apply to the panel container */
   className?: string;
+  /** If true, hides the 'Multi-Agent Online' status indicator. Defaults to false. */
   embedded?: boolean;
+  /** Optional child elements to render above the quick queries */
   children?: React.ReactNode;
+  /** Callback fired whenever the message history changes */
   onMessagesChange?: (messages: ChatMessage[]) => void;
 }
+
+/**
+ * A reusable, standalone chat interface for interacting with specialized AI agents.
+ * Features auto-scrolling, quick queries, a typing indicator, and responsive design.
+ */
 
 export default function ChatPanel({
   agentName,

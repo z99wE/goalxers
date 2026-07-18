@@ -6,6 +6,10 @@ CheerTribe 2026 is a production-grade web companion for fans attending the **FIF
 
 ## Problem Statement
 
+**Build a GenAI-enabled solution that enhances stadium operations and the overall tournament experience for fans, organizers, volunteers, or venue staff.**
+
+The solution leverages Generative AI to improve navigation, crowd management, accessibility, transportation, sustainability, multilingual assistance, operational intelligence, and real-time decision support during the FIFA World Cup 2026.
+
 A 48-team, 104-match tournament spread across 16 stadiums in three countries creates a brutal information-management problem for fans: scattered ticket rules, inconsistent transit directions, and no unified place to ask questions in real time.
 
 CheerTribe solves this by collapsing logistics, navigation, and ticketing into a single conversational portal backed by specialized AI agents — each trained on real venue data.
