@@ -34,6 +34,8 @@ interface Stadium {
   lat: number;
   lng: number;
   transport: string;
+  open: string;
+  surface: string;
 }
 
 interface StadiumMapProps {

@@ -3,24 +3,24 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const FAN_IMAGES = [
   {
-    url: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=800',
-    caption: 'La Albiceleste supporters bringing the absolute passion of South America',
-    team: 'Argentina Fans',
+    url: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800',
+    quote: 'Sport has the power to change the world. It has the power to inspire. It has the power to unite people in a way that little else does.',
+    author: 'Nelson Mandela',
   },
   {
-    url: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=800',
-    caption: 'The vibrant yellow wall of Brazil supporters filling the stands',
-    team: 'Brazil Fans',
+    url: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=800',
+    quote: 'Some people think football is a matter of life and death. I assure you, it is much more serious than that.',
+    author: 'Bill Shankly',
   },
   {
-    url: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&q=80&w=800',
-    caption: 'European fans chanting in unison at the grand stadium gates',
-    team: 'Europe Supporters',
+    url: 'https://images.unsplash.com/photo-1431324155629-1a6edd1d1315?auto=format&fit=crop&q=80&w=800',
+    quote: 'The more difficult the victory, the greater the happiness in winning.',
+    author: 'Pelé',
   },
   {
-    url: 'https://images.unsplash.com/photo-1518063319789-7217e6706b04?auto=format&fit=crop&q=80&w=800',
-    caption: 'Supporters waving flags and igniting the stadium atmosphere',
-    team: 'Cheering Crowd',
+    url: 'https://images.unsplash.com/photo-1519766304817-4f37bda74a27?auto=format&fit=crop&q=80&w=800',
+    quote: 'Football is the ballet of the masses.',
+    author: 'Dmitri Shostakovich',
   },
 ];
 
@@ -30,7 +30,7 @@ export default function FanCarousel() {
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % FAN_IMAGES.length);
-    }, 4500);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
@@ -47,25 +47,25 @@ export default function FanCarousel() {
         >
           <img
             src={FAN_IMAGES[index].url}
-            alt={FAN_IMAGES[index].team}
-            className="w-full h-full object-cover brightness-[0.65]"
+            alt="CheerTribe Supporter"
+            className="w-full h-full object-cover brightness-[0.55]"
           />
           {/* Vignette */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
           
-          {/* Info Card overlay */}
-          <div className="absolute bottom-5 left-5 right-5 text-left">
-            <span className="text-[10px] font-mono font-bold text-yellow-400 bg-yellow-400/10 border border-yellow-400/20 px-2 py-0.5 rounded-full uppercase tracking-wider">
-              {FAN_IMAGES[index].team}
-            </span>
-            <p className="text-white text-xs font-semibold mt-2 leading-relaxed" style={{ letterSpacing: '0.015em' }}>
-              "{FAN_IMAGES[index].caption}"
+          {/* Text Quote overlay — no badges, no icons */}
+          <div className="absolute bottom-6 left-6 right-6 text-left">
+            <p className="text-white text-sm font-semibold leading-relaxed mb-1.5" style={{ letterSpacing: '0.015em' }}>
+              "{FAN_IMAGES[index].quote}"
+            </p>
+            <p className="text-yellow-400 text-xs font-mono tracking-widest uppercase">
+              — {FAN_IMAGES[index].author}
             </p>
           </div>
         </motion.div>
       </AnimatePresence>
 
-      {/* Progress dots */}
+      {/* Slide Indicators — clean dots, no icons */}
       <div className="absolute top-5 right-5 flex gap-1.5 z-20">
         {FAN_IMAGES.map((_, i) => (
           <button

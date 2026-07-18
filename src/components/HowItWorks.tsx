@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export default function HowItWorks() {
   const navigate = useNavigate();
 
-  const handlePromptClick = (prompt: string) => {
+  const handlePromptClick = (_prompt: string) => {
     // In a real implementation with global state, we would pass this prompt to the Assistant.
     // For now, we'll navigate to the assistant page which could read it from context/url.
     navigate('/assistant');

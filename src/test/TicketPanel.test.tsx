@@ -5,7 +5,7 @@ import { describe, it, expect } from 'vitest';
 describe('TicketPanel', () => {
   it('renders ticket details correctly', () => {
     render(<TicketPanel sectionId="sec-101" onClose={() => {}} />);
-    expect(screen.getByText(/Elite Hospitality/i)).toBeInTheDocument();
-    expect(screen.getByText(/SECTION 101/i)).toBeInTheDocument();
+    expect(screen.getByText(/ESTADIO AZTECA/i)).toBeInTheDocument();
+    expect(screen.getByText(/VIP Club Access/i)).toBeInTheDocument();
   });
 });

@@ -4,7 +4,7 @@ import { describe, it, expect, vi } from 'vitest';
 
 vi.mock('../services/aiService', () => ({
   generateTextResponse: vi.fn().mockResolvedValue('Hello from AI'),
-  generateSpeech: vi.fn().mockResolvedValue(new ArrayBuffer(8)),
+  generateSpeech: vi.fn().mockResolvedValue(undefined),
 }));
 
 vi.mock('react-hot-toast', () => ({
@@ -23,17 +23,17 @@ describe('GenAIAssistant', () => {
     render(<GenAIAssistant />);
     
     // Open chat
-    const triggerBtn = screen.getByLabelText(/Open GenAI Assistant/i);
+    const triggerBtn = screen.getByLabelText(/Open AI Assistant/i);
     fireEvent.click(triggerBtn);
     
     // Check if open
-    expect(screen.getByPlaceholderText(/Ask about routing, crowds/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Ask about tickets, stadiums, schedules/i)).toBeInTheDocument();
     
     // Type and send
-    const input = screen.getByPlaceholderText(/Ask about routing, crowds/i);
+    const input = screen.getByPlaceholderText(/Ask about tickets, stadiums, schedules/i);
     fireEvent.change(input, { target: { value: 'Hi' } });
     
-    const sendBtn = screen.getByRole('button', { name: /Send/i });
+    const sendBtn = screen.getByRole('button', { name: /↑/i });
     fireEvent.click(sendBtn);
     
     await waitFor(() => {
