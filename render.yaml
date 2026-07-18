@@ -1,11 +1,16 @@
 services:
   - type: web
-    name: fifa-stadium-app
+    name: cheertribe-2026
     env: node
+    plan: free
     buildCommand: npm install && npm run build
     startCommand: node server/index.js
     envVars:
+      - key: NODE_ENV
+        value: production
       - key: GROQ_API_KEY
         sync: false
-      - key: DEEPGRAM_API_KEY
+      - key: NIM_API_KEY
+        sync: false
+      - key: FRONTEND_URL
         sync: false
