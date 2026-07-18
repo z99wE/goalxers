@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
-import { Home, Map, Ticket, Bot, HelpCircle } from 'lucide-react';
+
 
 export default function Navigation() {
   const navItems = [
-    { name: 'Home', path: '/', icon: Home },
-    { name: 'Map', path: '/map', icon: Map },
-    { name: 'Tickets', path: '/tickets', icon: Ticket },
-    { name: 'AI Assistant', path: '/assistant', icon: Bot },
-    { name: 'How it Works', path: '/how-it-works', icon: HelpCircle },
+    { name: 'Home', path: '/' },
+    { name: 'Map', path: '/map' },
+    { name: 'Tickets', path: '/tickets' },
+    { name: 'AI Assistant', path: '/assistant' },
+    { name: 'How it Works', path: '/how-it-works' },
   ];
 
   return (
@@ -37,8 +37,7 @@ export default function Navigation() {
           `}
           aria-label={`Navigate to ${item.name}`}
         >
-          <item.icon size={14} />
-          <span className="hidden md:inline">{item.name}</span>
+          {item.name}
         </NavLink>
       ))}
     </motion.nav>
