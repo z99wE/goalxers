@@ -64,10 +64,15 @@ export default function ChatPanel({
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: scrollContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
     if (onMessagesChange) onMessagesChange(messages);
   }, [messages, loading, onMessagesChange]);
 
@@ -144,6 +149,7 @@ export default function ChatPanel({
 
       {/* Messages Area */}
       <div 
+        ref={scrollContainerRef}
         className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-3 min-h-0 focus:outline-none focus:ring-1 focus:ring-yellow-400/30"
         tabIndex={0}
         role="log"
@@ -166,7 +172,6 @@ export default function ChatPanel({
             <span className="w-1.5 h-1.5 bg-yellow-400/30 rounded-full typing-dot" />
           </div>
         )}
-        <div ref={messagesEndRef} />
       </div>
 
       {children}
