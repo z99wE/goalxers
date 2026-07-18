@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import FanCarousel from '../components/FanCarousel';
 
 const MATCHES = [
   { home: 'USA', away: 'Mexico', date: 'Jun 11', venue: 'Estadio Azteca', time: '19:00', score: 'LIVE', homeFlag: '🇺🇸', awayFlag: '🇲🇽' },
@@ -176,16 +175,6 @@ export default function Home() {
             {MATCHES.map((match, i) => <MatchCard key={i} match={match} index={i} />)}
           </div>
         </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          FAN ATMOSPHERE CAROUSEL
-      ════════════════════════════════════════ */}
-      <section className="py-12 max-w-7xl mx-auto px-4">
-        <h2 className="text-[11px] font-mono font-bold text-yellow-400 tracking-widest uppercase mb-6" style={{ letterSpacing: '0.12em' }}>
-          CheerTribe Supporters in Action
-        </h2>
-        <FanCarousel />
       </section>
 
       {/* ═══════════════════════════════════════

@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import HowItWorks from '../components/HowItWorks';
-import FanCarousel from '../components/FanCarousel';
 
 export default function HowItWorksPage() {
   return (
@@ -23,13 +22,7 @@ export default function HowItWorksPage() {
         
         <HowItWorks />
 
-        {/* Supporters section under architecture */}
-        <div className="mt-16 border-t border-white/8 pt-12 max-w-3xl mx-auto">
-          <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest text-center mb-6" style={{ letterSpacing: '0.12em' }}>
-            CheerTribe Fan Spirit
-          </p>
-          <FanCarousel />
-        </div>
+
       </div>
     </motion.div>
   );

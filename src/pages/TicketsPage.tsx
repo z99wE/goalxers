@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { generateTextResponse } from '../services/aiService';
-import FanCarousel from '../components/FanCarousel';
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 const TICKET_CATEGORIES = [
@@ -238,11 +237,7 @@ export default function TicketsPage() {
             <img src="/pitch_closeup.png" alt="Football pitch" className="w-full h-44 object-cover" />
           </div>
 
-          {/* Fan Carousel */}
-          <div>
-            <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-3">Supporter Atmosphere</p>
-            <FanCarousel />
-          </div>
+
 
           {/* Info box */}
           <div className="bg-white/3 border border-white/8 rounded-2xl p-6 hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300">

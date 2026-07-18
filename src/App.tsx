@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import Navigation from './components/Navigation';
 import NewsTicker from './components/NewsTicker';
-import FanTicker from './components/FanTicker';
+import { FocusRail } from './components/ui/focus-rail';
 import Home from './pages/Home';
 import MapPage from './pages/MapPage';
 import TicketsPage from './pages/TicketsPage';
@@ -17,6 +17,37 @@ const pageVariants = {
   animate: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
   exit: { opacity: 0, y: -8, transition: { duration: 0.25 } },
 };
+
+const CAROUSEL_ITEMS = [
+  {
+    id: "fan-1",
+    title: "Vibrant Celebrations",
+    description: "Spanish supporters bringing unmatched energy to the stadiums.",
+    meta: "Supporters • Spain",
+    imageSrc: "/fan_chat_1.jpg",
+  },
+  {
+    id: "fan-2",
+    title: "Albiceleste Passion",
+    description: "Argentine fans singing and waving flags in massive crowds.",
+    meta: "Supporters • Argentina",
+    imageSrc: "/fan_chat_2.jpg",
+  },
+  {
+    id: "fan-3",
+    title: "Die Mannschaft Unity",
+    description: "German fans cheering in unity with passion under stadium lights.",
+    meta: "Supporters • Germany",
+    imageSrc: "/fan_chat_3.jpg",
+  },
+  {
+    id: "fan-4",
+    title: "Navegadores Pride",
+    description: "Portuguese fans celebrating historical match moments together.",
+    meta: "Supporters • Portugal",
+    imageSrc: "/fan_chat_4.jpg",
+  },
+];
 
 function PageWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -83,7 +114,23 @@ function App() {
           <RouteWrapper />
         </Suspense>
 
-        <FanTicker />
+        <section className="relative z-10 w-full py-12 bg-[#050508] border-t border-white/5 flex flex-col items-center justify-center overflow-hidden">
+          <div className="mb-6 text-center px-4">
+            <h2 className="text-[11px] font-mono font-bold text-yellow-400 tracking-widest uppercase mb-1" style={{ letterSpacing: '0.12em' }}>
+              CheerTribe Supporter Atmosphere
+            </h2>
+            <p className="text-slate-500 text-[11px] max-w-md mx-auto leading-relaxed">
+              Experience the passion of football fans cheering across host stadiums.
+            </p>
+          </div>
+          <FocusRail 
+            items={CAROUSEL_ITEMS}
+            autoPlay={true}
+            interval={4000}
+            loop={true}
+            className="h-[500px]"
+          />
+        </section>
 
         {/* Footer with faded penalty box */}
         <footer className="relative w-full h-44 border-t border-white/5 bg-[#050508] overflow-hidden mt-12 flex items-center justify-center">

@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import GenAIAssistant from '../components/GenAIAssistant';
-import FanCarousel from '../components/FanCarousel';
 
 export default function AssistantPage() {
   return (
@@ -27,13 +26,8 @@ export default function AssistantPage() {
             <GenAIAssistant embedded={true} />
           </div>
 
-          {/* Sidebar with Carousel & Supporters Info */}
-          <div className="space-y-6">
-            <div>
-              <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-3">Supporter Atmosphere</p>
-              <FanCarousel />
-            </div>
 
+          <div className="space-y-6">
             {/* Premium Supporter Card */}
             <div className="bg-white/3 border border-white/8 rounded-2xl p-6 hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300">
               <h3 className="text-white font-bold text-sm mb-3" style={{ letterSpacing: '0.01em' }}>Join the Tribe</h3>
