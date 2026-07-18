@@ -47,41 +47,7 @@ const apiLimiter = rateLimit({
 
 app.use('/api/', apiLimiter);
 
-// Server-side Groq Whisper Transcription proxy using raw body payload
-app.post('/api/transcribe', express.raw({ type: () => true, limit: '12mb' }), async (req, res) => {
-  try {
-    const groqKey = process.env.GROQ_API_KEY;
-    if (!groqKey) throw new Error('Groq key not found in server');
 
-    const audioBlob = new Blob([req.body], { type: req.headers['content-type'] || 'audio/webm' });
-    const formData = new FormData();
-    formData.append('file', audioBlob, 'audio.webm');
-    formData.append('model', 'whisper-large-v3');
-
-    const response = await fetch(
-      'https://api.groq.com/openai/v1/audio/transcriptions',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${groqKey}`,
-        },
-        body: formData,
-      }
-    );
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Groq Whisper API responded with status ${response.status}: ${errorText}`);
-    }
-
-    const data = await response.json();
-    const transcript = data.text || '';
-    res.json({ transcript });
-  } catch (error) {
-    console.error('Transcription Server Error:', error);
-    res.status(500).json({ error: 'Failed to transcribe audio' });
-  }
-});
 
 // Proxy Groq Chat request (Primary LLM)
 app.post('/api/groq/chat', async (req, res) => {
@@ -138,39 +104,7 @@ app.post('/api/nim/chat', async (req, res) => {
   }
 });
 
-// Proxy Sarvam AI request (Fallback Voice)
-app.post('/api/sarvam/tts', async (req, res) => {
-  try {
-    const { inputs, target_language_code } = req.body;
-    const response = await fetch('https://api.sarvam.ai/text-to-speech', {
-      method: 'POST',
-      headers: {
-        'api-subscription-key': process.env.SARVAM_API_KEY,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        inputs: Array.isArray(inputs) ? inputs : [inputs],
-        target_language_code: target_language_code || "hi-IN",
-        speaker: "anushka",
-        pitch: 0,
-        pace: 1.0,
-        loudness: 1.5,
-        speech_sample_rate: 8000,
-        enable_preprocessing: true,
-        model: "bulbul:v1"
-      })
-    });
-    
-    const data = await response.json();
-    if (!response.ok) {
-      return res.status(response.status).json(data);
-    }
-    res.json(data); // Returns base64 audio in audios array
-  } catch (error) {
-    console.error('Sarvam API Error:', error);
-    res.status(500).json({ error: 'Failed to generate TTS with Sarvam' });
-  }
-});
+
 
 // Serve frontend static files
 app.use(express.static(path.join(__dirname, '../dist')));

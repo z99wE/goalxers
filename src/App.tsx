@@ -81,6 +81,22 @@ function App() {
         }>
           <RouteWrapper />
         </Suspense>
+
+        {/* Footer with faded penalty box */}
+        <footer className="relative w-full h-48 border-t border-white/5 bg-[#050508] overflow-hidden mt-20 flex items-center justify-center">
+          <div className="absolute inset-0 flex justify-center pointer-events-none opacity-[0.03] select-none">
+            <svg className="w-full max-w-4xl h-full" viewBox="0 0 800 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="200" x2="800" y2="200" stroke="white" strokeWidth="2" />
+              <rect x="200" y="50" width="400" height="150" stroke="white" strokeWidth="2" />
+              <rect x="320" y="150" width="160" height="50" stroke="white" strokeWidth="2" />
+              <circle cx="400" cy="110" r="4" fill="white" />
+              <path d="M 340 50 A 70 70 0 0 1 460 50" stroke="white" strokeWidth="2" strokeDasharray="6,6" />
+            </svg>
+          </div>
+          <div className="text-center relative z-10 text-[9px] font-mono tracking-[0.2em] text-white/20 uppercase select-none">
+            © 2026 CHEERTRIBE · EVERY MATCH. ONE PLATFORM.
+          </div>
+        </footer>
       </div>
     </BrowserRouter>
   );

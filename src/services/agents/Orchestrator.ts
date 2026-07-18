@@ -4,7 +4,6 @@
  * prompt injection defense, and LLM fallback chain.
  */
 import { llmRouter } from '../llm/LLMProvider';
-import { audioRouter } from '../llm/AudioProvider';
 import { getSystemPrompt } from '../prompts';
 
 export type AgentIntent = 'TICKETING' | 'NAVIGATION' | 'FAQ' | 'SCHEDULE';
@@ -86,9 +85,7 @@ class AgentOrchestrator {
     return response;
   }
 
-  public async handleAudioSynthesis(text: string): Promise<Blob> {
-    return audioRouter.synthesize(text);
-  }
+
 
   // ── Intent classifier ──────────────────────────────────────────────
   private detectIntent(msg: string): AgentIntent {

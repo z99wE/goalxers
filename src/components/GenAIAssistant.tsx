@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { generateTextResponse, transcribeAudio, generateSpeech } from '../services/aiService';
+import { generateTextResponse } from '../services/aiService';
 import { orchestrator } from '../services/agents/Orchestrator';
 import type { AgentActivity } from '../services/agents/Orchestrator';
 import toast from 'react-hot-toast';
@@ -67,10 +67,7 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
 
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
   const [activities, setActivities] = useState<AgentActivity[]>([]);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const audioChunksRef = useRef<Blob[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Subscribe to agent activity events
@@ -104,7 +101,6 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
         role: 'ai',
         content: aiContent,
       }]);
-      generateSpeech(aiContent);
     } catch {
       toast.error('Could not reach AI. Check your API keys or connection.');
     } finally {
@@ -112,47 +108,7 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
     }
   }, [isTyping, messages]);
 
-  const toggleRecording = async () => {
-    if (isRecording) {
-      mediaRecorderRef.current?.stop();
-      setIsRecording(false);
-      return;
-    }
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
-      mediaRecorderRef.current = mediaRecorder;
-      audioChunksRef.current = [];
-      mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) audioChunksRef.current.push(e.data); };
-      mediaRecorder.onstop = async () => {
-        stream.getTracks().forEach(t => t.stop());
-        if (audioChunksRef.current.length === 0) {
-          setIsTyping(false);
-          toast.error('Microphone captured no audio data. Please try again.');
-          return;
-        }
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-        if (audioBlob.size < 100) {
-          setIsTyping(false);
-          toast.error('Audio clip is too short or empty. Please check your microphone.');
-          return;
-        }
-        setIsTyping(true);
-        try {
-          const transcript = await transcribeAudio(audioBlob);
-          if (transcript) handleSendText(transcript);
-          else { setIsTyping(false); toast.error('No speech detected. Try again.'); }
-        } catch (err: any) {
-          toast.error(`Transcription failed: ${err.message || err}`);
-          setIsTyping(false);
-        }
-      };
-      mediaRecorder.start();
-      setIsRecording(true);
-    } catch {
-      toast.error('Microphone permission denied.');
-    }
-  };
+
 
   const clearChat = () => {
     setMessages([{
@@ -245,16 +201,6 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
       {/* Input */}
       <div className="px-4 py-4 border-t border-white/6 bg-black/10 flex-shrink-0">
         <form onSubmit={(e) => { e.preventDefault(); handleSendText(input); }} className="flex gap-2.5">
-          <button
-            type="button"
-            onClick={toggleRecording}
-            className={`flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center text-sm transition-all cursor-pointer ${
-              isRecording ? 'bg-red-500 text-white animate-pulse' : 'bg-white/8 text-white/40 hover:bg-white/15 hover:text-white'
-            }`}
-            aria-label={isRecording ? 'Stop recording' : 'Voice input'}
-          >
-            {isRecording ? '⏹' : '🎤'}
-          </button>
           <input
             type="text"
             value={input}

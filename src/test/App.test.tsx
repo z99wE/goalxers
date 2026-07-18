@@ -14,6 +14,6 @@ describe('App Component', () => {
   it('renders core components on home page', async () => {
     window.history.pushState({}, 'Test page', '/');
     render(<App />);
-    expect(screen.getByText(/Every Match/i)).toBeInTheDocument();
+    expect(screen.getByText(/routes your questions/i)).toBeInTheDocument();
   });
 });
