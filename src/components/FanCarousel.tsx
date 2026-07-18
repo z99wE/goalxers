@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const FAN_IMAGES = [
   {
-    url: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800',
+    url: 'https://images.unsplash.com/photo-1504156806659-109efbf65752?auto=format&fit=crop&q=80&w=800',
     quote: 'Sport has the power to change the world. It has the power to inspire. It has the power to unite people in a way that little else does.',
     author: 'Nelson Mandela',
   },
   {
-    url: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=800',
+    url: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&q=80&w=800',
     quote: 'Some people think football is a matter of life and death. I assure you, it is much more serious than that.',
     author: 'Bill Shankly',
   },
@@ -18,7 +18,7 @@ const FAN_IMAGES = [
     author: 'Pelé',
   },
   {
-    url: 'https://images.unsplash.com/photo-1519766304817-4f37bda74a27?auto=format&fit=crop&q=80&w=800',
+    url: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=800',
     quote: 'Football is the ballet of the masses.',
     author: 'Dmitri Shostakovich',
   },
@@ -47,7 +47,7 @@ export default function FanCarousel() {
         >
           <img
             src={FAN_IMAGES[index].url}
-            alt="CheerTribe Supporter"
+            alt="Football Stadium Atmosphere"
             className="w-full h-full object-cover brightness-[0.55]"
           />
           {/* Vignette */}
