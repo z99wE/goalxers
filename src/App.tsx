@@ -115,14 +115,6 @@ function App() {
         </Suspense>
 
         <section className="relative z-10 w-full py-12 bg-[#050508] border-t border-white/5 flex flex-col items-center justify-center overflow-hidden">
-          <div className="mb-6 text-center px-4">
-            <h2 className="text-[11px] font-mono font-bold text-yellow-400 tracking-widest uppercase mb-1" style={{ letterSpacing: '0.12em' }}>
-              CheerTribe Supporter Atmosphere
-            </h2>
-            <p className="text-slate-500 text-[11px] max-w-md mx-auto leading-relaxed">
-              Experience the passion of football fans cheering across host stadiums.
-            </p>
-          </div>
           <FocusRail 
             items={CAROUSEL_ITEMS}
             autoPlay={true}

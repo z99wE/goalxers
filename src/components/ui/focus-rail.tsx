@@ -1,8 +1,7 @@
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { PanInfo } from "framer-motion";
-import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 export type FocusRailItem = {
@@ -240,34 +239,7 @@ export function FocusRail({
         </motion.div>
 
         {/* Info & Controls */}
-        <div className="mx-auto mt-12 flex w-full max-w-4xl flex-col items-center justify-between gap-6 md:flex-row pointer-events-auto">
-          <div className="flex flex-1 flex-col items-center text-center md:items-start md:text-left h-32 justify-center">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeItem.id}
-                initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
-                transition={{ duration: 0.3 }}
-                className="space-y-2"
-              >
-                {activeItem.meta && (
-                  <span className="text-xs font-medium uppercase tracking-wider text-emerald-400">
-                    {activeItem.meta}
-                  </span>
-                )}
-                <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-white">
-                  {activeItem.title}
-                </h2>
-                {activeItem.description && (
-                  <p className="max-w-md text-neutral-400">
-                    {activeItem.description}
-                  </p>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
+        <div className="mx-auto mt-12 flex w-full max-w-4xl flex-col items-center justify-center gap-6 md:flex-row pointer-events-auto">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1 rounded-full bg-neutral-900/80 p-1 ring-1 ring-white/10 backdrop-blur-md">
               <button
@@ -277,9 +249,6 @@ export function FocusRail({
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
-              <span className="min-w-[40px] text-center text-xs font-mono text-neutral-500">
-                {activeIndex + 1} / {count}
-              </span>
               <button
                 onClick={handleNext}
                 className="rounded-full p-3 text-neutral-400 transition hover:bg-white/10 hover:text-white active:scale-95"
@@ -288,16 +257,6 @@ export function FocusRail({
                 <ChevronRight className="h-5 w-5" />
               </button>
             </div>
-
-            {activeItem.href && (
-              <Link
-                to={activeItem.href}
-                className="group flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition-transform hover:scale-105 active:scale-95"
-              >
-                Explore
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </Link>
-            )}
           </div>
         </div>
       </div>
