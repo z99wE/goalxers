@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { orchestrator, AgentActivity } from '../services/agents/Orchestrator';
+import { orchestrator, type AgentActivity } from '../services/agents/Orchestrator';
 import { llmRouter } from '../services/llm/LLMProvider';
 
 // Mock LLM Provider
