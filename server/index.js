@@ -77,9 +77,9 @@ const chatSchema = z.object({
   messages: z.array(
     z.object({
       role: z.enum(['user', 'assistant', 'system']),
-      content: z.string().min(1).max(2000)
+      content: z.string().min(1).max(50000)
     })
-  ).max(20)
+  ).max(50)
 });
 
 // Proxy Groq Chat request (Primary LLM)
