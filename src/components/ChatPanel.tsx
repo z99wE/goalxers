@@ -84,7 +84,8 @@ export default function ChatPanel({
     try {
       const responseText = await onSend(query.trim(), updatedHistory);
       setMessages(prev => [...prev, { role: 'ai', content: responseText }]);
-    } catch {
+    } catch (error) {
+      console.warn('Chat interaction failed:', error);
       setMessages(prev => [...prev, { role: 'ai', content: 'Service temporarily unavailable. Please try again.' }]);
     } finally {
       setLoading(false);

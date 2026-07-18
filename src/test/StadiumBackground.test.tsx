@@ -57,4 +57,25 @@ describe('StadiumBackground', () => {
     expect(queryByText('127')).not.toBeInTheDocument();
     expect(queryByText('221')).not.toBeInTheDocument();
   });
+
+  test('handles global mouse movement for parallax', () => {
+    const onSectionSelect = vi.fn();
+    render(<StadiumBackground onSectionSelect={onSectionSelect} selectedSection={null} />);
+
+    // Simulate mouse move on window
+    fireEvent.mouseMove(window, { clientX: 500, clientY: 500 });
+  });
+
+  test('handles mouse enter and leave on sections', () => {
+    const onSectionSelect = vi.fn();
+    const { getByText } = render(
+      <StadiumBackground onSectionSelect={onSectionSelect} selectedSection={null} />
+    );
+
+    const section127 = getByText(/127/).closest('button')!;
+    
+    // Simulate hover
+    fireEvent.mouseEnter(section127);
+    fireEvent.mouseLeave(section127);
+  });
 });

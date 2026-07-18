@@ -40,4 +40,37 @@ describe('GenAIAssistant', () => {
         expect(screen.getByText('Hello from AI')).toBeInTheDocument();
     });
   });
+
+  it('can be used in embedded mode without trigger button', () => {
+    render(<GenAIAssistant embedded />);
+    // Should be open immediately without trigger button
+    expect(screen.queryByLabelText(/Open AI Assistant/i)).not.toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Ask about tickets, stadiums, schedules/i)).toBeInTheDocument();
+  });
+
+  it('can send a quick query', async () => {
+    render(<GenAIAssistant embedded />);
+    
+    const quickQuery = screen.getByText(/Find tickets for the World Cup Final/i);
+    fireEvent.click(quickQuery);
+
+    await waitFor(() => {
+        expect(screen.getByText('Hello from AI')).toBeInTheDocument();
+    });
+  });
+
+  it('closes the chat panel when close button is clicked', async () => {
+    render(<GenAIAssistant />);
+    
+    // Open chat
+    const triggerBtn = screen.getByLabelText(/Open AI Assistant/i);
+    fireEvent.click(triggerBtn);
+    
+    const closeBtn = screen.getByLabelText(/Close AI Assistant/i);
+    fireEvent.click(closeBtn);
+
+    await waitFor(() => {
+        expect(screen.queryByPlaceholderText(/Ask about tickets, stadiums, schedules/i)).not.toBeInTheDocument();
+    });
+  });
 });

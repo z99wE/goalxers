@@ -48,8 +48,8 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
     try {
       const saved = localStorage.getItem('cheertribe_ai_chat_v3');
       if (saved) return JSON.parse(saved);
-    } catch {
-      // ignore JSON parse error
+    } catch (err) {
+      console.warn('Failed to load chat history from localStorage:', err);
     }
     return [{
       role: 'ai',
@@ -78,8 +78,8 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
   const handleMessagesChange = useCallback((newMessages: ChatMessage[]) => {
     try { 
       localStorage.setItem('cheertribe_ai_chat_v3', JSON.stringify(newMessages)); 
-    } catch {
-      // ignore quota exceeded or other errors
+    } catch (err) {
+      console.warn('Failed to save chat history to localStorage:', err);
     }
   }, []);
 
@@ -96,7 +96,8 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
         content: m.content,
       }));
       return await generateTextResponse(apiMessages);
-    } catch {
+    } catch (error) {
+      console.error('LLM API call failed:', error);
       toast.error('Could not reach AI. Check your API keys or connection.');
       throw new Error('Service unavailable');
     }

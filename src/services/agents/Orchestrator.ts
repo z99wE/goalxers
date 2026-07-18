@@ -150,7 +150,8 @@ class AgentOrchestrator {
     try {
       response = await llmRouter.chat(securedMessages);
       this.emit({ agent: agentName, status: 'done', message: 'Response generated via primary LLM (Groq)', timestamp: Date.now() });
-    } catch {
+    } catch (error) {
+      console.warn(`Primary LLM for ${agentName} failed:`, error);
       this.emit({ agent: agentName, status: 'fallback', message: 'Primary LLM unavailable — activating NIM fallback…', timestamp: Date.now() });
       // llmRouter already handles internal fallback, rethrow will be caught upstream
       throw new Error('All LLM providers failed');

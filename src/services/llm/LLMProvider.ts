@@ -62,7 +62,8 @@ export class ResilientLLMRouter implements ILLMProvider {
   async chat(messages: { role: string; content: string }[]): Promise<string> {
     try {
       return await this.primary.chat(messages);
-    } catch {
+    } catch (error) {
+      console.warn('Primary LLM provider failed, falling back to secondary:', error);
       return await this.secondary.chat(messages);
     }
   }

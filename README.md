@@ -133,9 +133,9 @@ fifa-stadium/
 | Scope | Details |
 |---|---|
 | **Framework** | Vitest with `@testing-library/react` and `jsdom` environment. |
-| **Coverage** | 12 test files covering 21 test cases. All pass on every build. |
-| **Component tests** | `Navigation.test.tsx`, `MatchInfo.test.tsx`, `TicketPanel.test.tsx`, `GenAIAssistant.test.tsx`, `HowItWorks.test.tsx`, `Stadium3D.test.tsx`, `StadiumBackground.test.tsx`, `StadiumMap.test.tsx`, `FocusRail.test.tsx`. |
-| **Service tests** | `LLMProvider.test.ts` validates the primary/fallback chain, error propagation, and response formatting. `aiService.test.ts` tests the unified API caller. |
+| **Coverage** | 14 test files covering 40 test cases with >86% statement coverage and >83% line coverage. All pass on every build. |
+| **Component tests** | `Navigation.test.tsx`, `MatchInfo.test.tsx`, `TicketPanel.test.tsx`, `GenAIAssistant.test.tsx`, `HowItWorks.test.tsx`, `Stadium3D.test.tsx`, `StadiumBackground.test.tsx`, `StadiumMap.test.tsx`, `FocusRail.test.tsx`, `ErrorBoundary.test.tsx`. |
+| **Service tests** | `LLMProvider.test.ts` validates the primary/fallback chain, error propagation, and response formatting. `aiService.test.ts` tests the unified API caller. `Orchestrator.test.ts` verifies intent routing. |
 | **Integration test** | `App.test.tsx` mounts the full application router and verifies initial render. |
 | **Type safety** | `tsc -b` (strict mode) runs before every build. Type errors block production deploys. |
 | **Lint gate** | `oxlint` with 103 rules runs in CI. Zero warnings, zero errors. |
@@ -143,7 +143,7 @@ fifa-stadium/
 ### Running Tests
 
 ```bash
-npm run test        # Run all 21 tests with coverage report
+npm run test        # Run all 40 tests with coverage report
 npm run lint        # Run oxlint (103 rules, 42 files)
 npm run build       # Full TypeScript check + production build
 ```
@@ -154,8 +154,9 @@ npm run build       # Full TypeScript check + production build
 
 | Practice | Implementation |
 |---|---|
-| **Semantic HTML** | Pages use `<main>`, `<section>`, `<footer>`, `<nav>`, and `<header>` elements. The app layout wraps page content in a `<main>` tag. |
-| **ARIA roles** | Chat message areas use `role="log"` with `aria-live="polite"` so screen readers announce new messages. The stadium list uses `role="region"` with `aria-label`. Loading indicators use `role="status"`. |
+| **Skip Navigation** | A "Skip to main content" link is available for keyboard users to bypass repetitive navigation links. |
+| **Semantic HTML** | Pages use `<main>`, `<section>`, `<footer>`, `<nav>`, and `<header>` elements with distinct ARIA landmarks. The app layout wraps page content in a `<main>` tag. |
+| **ARIA roles** | Chat message areas use `role="log"` with `aria-live="polite"` so screen readers announce new messages. The stadium list and chat interfaces use `role="region"` with explicit `aria-label`s. Loading indicators use `role="status"`. |
 | **Focus management** | Every interactive element (buttons, inputs, links) has visible `focus:ring` outlines. The `FocusRail` carousel supports keyboard navigation. Scrollable regions have `tabIndex={0}` for keyboard access. |
 | **Color contrast** | Dark background (`#050508`) paired with white text and yellow-400 accents meets WCAG AAA contrast ratios. The global stadium background uses a heavy gradient overlay (`from-[#050508]/80 via-[#050508]/60`) to guarantee text legibility. |
 | **Label coverage** | All navigation links have `aria-label` attributes. Form inputs have `aria-label`. Action buttons (send, clear, close) are labeled for assistive technology. |
