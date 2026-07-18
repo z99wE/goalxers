@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import Navigation from './components/Navigation';
+import NewsTicker from './components/NewsTicker';
 import Home from './pages/Home';
 import MapPage from './pages/MapPage';
 import TicketsPage from './pages/TicketsPage';
@@ -70,6 +71,7 @@ function App() {
           }}
         />
 
+        <NewsTicker />
         <Navigation />
 
         <Suspense fallback={
