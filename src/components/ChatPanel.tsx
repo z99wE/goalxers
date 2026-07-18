@@ -97,7 +97,11 @@ export default function ChatPanel({
   };
 
   return (
-    <div className={`bg-[#0a0a10] border border-white/8 rounded-2xl flex flex-col overflow-hidden hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300 ${className}`}>
+    <div 
+      className={`bg-[#0a0a10] border border-white/8 rounded-2xl flex flex-col overflow-hidden hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300 ${className}`}
+      role="region"
+      aria-label={`${agentName} Chat Interface`}
+    >
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-white/6 flex-shrink-0">
         <div>

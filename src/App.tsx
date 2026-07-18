@@ -109,6 +109,13 @@ function App() {
           <GlobalBackground />
 
           <div className="relative z-10 flex flex-col min-h-screen">
+            <a 
+              href="#main-content" 
+              className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[100] px-4 py-2 bg-yellow-400 text-black font-bold rounded-full"
+            >
+              Skip to main content
+            </a>
+
             <Toaster 
               position="top-center"
               toastOptions={{
@@ -133,7 +140,7 @@ function App() {
             <NewsTicker />
             <Navigation />
 
-            <main className="flex-1">
+            <main id="main-content" className="flex-1">
               <Suspense fallback={
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-8 h-8 border-2 border-yellow-400/30 border-t-yellow-400 rounded-full animate-spin" />
