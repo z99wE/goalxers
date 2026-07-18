@@ -68,10 +68,15 @@ export default function ChatPanel({
 
   useEffect(() => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTo({
-        top: scrollContainerRef.current.scrollHeight,
-        behavior: 'smooth'
-      });
+      if (typeof scrollContainerRef.current.scrollTo === 'function') {
+        scrollContainerRef.current.scrollTo({
+          top: scrollContainerRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      } else {
+        // Fallback for jsdom (Vitest) environment
+        scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+      }
     }
     if (onMessagesChange) onMessagesChange(messages);
   }, [messages, loading, onMessagesChange]);
