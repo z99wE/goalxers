@@ -48,7 +48,7 @@ const apiLimiter = rateLimit({
 app.use('/api/', apiLimiter);
 
 // Server-side Groq Whisper Transcription proxy using raw body payload
-app.post('/api/transcribe', express.raw({ type: 'audio/*', limit: '12mb' }), async (req, res) => {
+app.post('/api/transcribe', express.raw({ type: () => true, limit: '12mb' }), async (req, res) => {
   try {
     const groqKey = process.env.GROQ_API_KEY;
     if (!groqKey) throw new Error('Groq key not found in server');

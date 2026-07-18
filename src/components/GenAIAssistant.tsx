@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { generateTextResponse, transcribeAudio } from '../services/aiService';
+import { generateTextResponse, transcribeAudio, generateSpeech } from '../services/aiService';
 import { orchestrator } from '../services/agents/Orchestrator';
 import type { AgentActivity } from '../services/agents/Orchestrator';
 import toast from 'react-hot-toast';
@@ -104,6 +104,7 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
         role: 'ai',
         content: aiContent,
       }]);
+      generateSpeech(aiContent);
     } catch {
       toast.error('Could not reach AI. Check your API keys or connection.');
     } finally {
@@ -124,15 +125,25 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
       audioChunksRef.current = [];
       mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) audioChunksRef.current.push(e.data); };
       mediaRecorder.onstop = async () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
         stream.getTracks().forEach(t => t.stop());
+        if (audioChunksRef.current.length === 0) {
+          setIsTyping(false);
+          toast.error('Microphone captured no audio data. Please try again.');
+          return;
+        }
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        if (audioBlob.size < 100) {
+          setIsTyping(false);
+          toast.error('Audio clip is too short or empty. Please check your microphone.');
+          return;
+        }
         setIsTyping(true);
         try {
           const transcript = await transcribeAudio(audioBlob);
           if (transcript) handleSendText(transcript);
           else { setIsTyping(false); toast.error('No speech detected. Try again.'); }
-        } catch {
-          toast.error('Voice transcription unavailable — Deepgram key required.');
+        } catch (err: any) {
+          toast.error(`Transcription failed: ${err.message || err}`);
           setIsTyping(false);
         }
       };
