@@ -62,7 +62,7 @@ export class ResilientLLMRouter implements ILLMProvider {
   async chat(messages: { role: string; content: string }[]): Promise<string> {
     try {
       return await this.primary.chat(messages);
-    } catch (error) {
+    } catch {
       return await this.secondary.chat(messages);
     }
   }

@@ -48,7 +48,9 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
     try {
       const saved = localStorage.getItem('cheertribe_ai_chat_v3');
       if (saved) return JSON.parse(saved);
-    } catch (_) {}
+    } catch {
+      // ignore JSON parse error
+    }
     return [{
       role: 'ai',
       content: 'Welcome to CheerTribe 2026. Ask me anything about World Cup tickets, stadium directions, match schedules, or travel tips across 16 host cities.',
@@ -74,8 +76,11 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
   }, [embedded]);
 
   const handleMessagesChange = useCallback((newMessages: ChatMessage[]) => {
-    try { localStorage.setItem('cheertribe_ai_chat_v3', JSON.stringify(newMessages)); }
-    catch (_) {}
+    try { 
+      localStorage.setItem('cheertribe_ai_chat_v3', JSON.stringify(newMessages)); 
+    } catch {
+      // ignore quota exceeded or other errors
+    }
   }, []);
 
   const clearChat = () => {

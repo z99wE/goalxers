@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import { z } from 'zod';
 import * as dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -16,21 +17,36 @@ const PORT = process.env.PORT || 3000;
 
 // Security Headers
 app.use(helmet({
-  contentSecurityPolicy: false, // Disabling CSP for now to prevent issues with React Dev tools and external assets unless explicitly configured
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // Vite HMR needs unsafe-inline/eval in dev
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
+      imgSrc: ["'self'", "data:", "blob:", "https://*.tile.openstreetmap.org", "https://unpkg.com"],
+      connectSrc: ["'self'", "ws:", "wss:"], // WebSockets for Vite HMR
+      workerSrc: ["'self'", "blob:"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: [],
+    },
+  },
 }));
 
 // Restrict CORS to specific origins in production, or allow local in dev
 const allowedOrigins = process.env.NODE_ENV === 'production' 
-  ? ['https://your-production-url.onrender.com'] // Example production URL
-  : ['http://localhost:5173', 'http://127.0.0.1:5173'];
+  ? [process.env.FRONTEND_URL || 'https://your-production-url.onrender.com'] // Production URL
+  : ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://127.0.0.1:5175'];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+    if (!origin && process.env.NODE_ENV !== 'production') {
+      // Allow requests with no origin (like mobile apps or curl requests) only in dev
+      return callback(null, true);
     }
+    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
   }
 }));
 
@@ -49,10 +65,22 @@ app.use('/api/', apiLimiter);
 
 
 
+// Validation Schema for chat messages
+const chatSchema = z.object({
+  messages: z.array(
+    z.object({
+      role: z.enum(['user', 'assistant', 'system']),
+      content: z.string().min(1).max(2000)
+    })
+  ).max(20)
+});
+
 // Proxy Groq Chat request (Primary LLM)
-app.post('/api/groq/chat', async (req, res) => {
+app.post('/api/groq/chat', async (req, res, next) => {
   try {
-    const { messages } = req.body;
+    const validated = chatSchema.parse(req.body);
+    const { messages } = validated;
+    
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -61,7 +89,8 @@ app.post('/api/groq/chat', async (req, res) => {
       },
       body: JSON.stringify({
         model: 'llama-3.3-70b-versatile',
-        messages
+        messages,
+        max_tokens: 1024
       })
     });
     
@@ -71,15 +100,16 @@ app.post('/api/groq/chat', async (req, res) => {
     }
     res.json(data);
   } catch (error) {
-    console.error('Groq API Error:', error);
-    res.status(500).json({ error: 'Failed to chat with Groq' });
+    next(error);
   }
 });
 
 // Proxy NIM request (Fallback LLM)
-app.post('/api/nim/chat', async (req, res) => {
+app.post('/api/nim/chat', async (req, res, next) => {
   try {
-    const { messages } = req.body;
+    const validated = chatSchema.parse(req.body);
+    const { messages } = validated;
+    
     const response = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -99,8 +129,7 @@ app.post('/api/nim/chat', async (req, res) => {
     }
     res.json(data);
   } catch (error) {
-    console.error('NIM API Error:', error);
-    res.status(500).json({ error: 'Failed to chat with NIM' });
+    next(error);
   }
 });
 
@@ -115,7 +144,17 @@ app.get(/^(.*)$/, (req, res) => {
 });
 
 // Centralized Error Handling Middleware
-app.use((err, req, res, next) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+app.use((err, req, res, _next) => {
+  if (err instanceof z.ZodError) {
+    return res.status(400).json({ error: 'Invalid request data', details: err.errors });
+  }
+  
+  // SyntaxError from body-parser (express.json)
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({ error: 'Bad JSON payload' });
+  }
+
   console.error('Unhandled Server Error:', err.stack || err);
   res.status(err.status || 500).json({
     error: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : err.message

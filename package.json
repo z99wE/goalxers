@@ -33,7 +33,8 @@
     "tailwindcss": "^4.3.3",
     "three": "^0.185.1",
     "vite-plugin-pwa": "^1.3.0",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@axe-core/react": "^4.12.1",
