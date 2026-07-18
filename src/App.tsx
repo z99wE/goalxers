@@ -76,16 +76,36 @@ function RouteWrapper() {
   );
 }
 
+function GlobalBackground() {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+
+  return (
+    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#050508]">
+      {!isHome && (
+        <>
+          <img 
+            src="/global-bg.jpg" 
+            alt="" 
+            className="absolute inset-0 w-full h-full object-cover opacity-15 mix-blend-luminosity saturate-50"
+          />
+          {/* Heavy gradient overlay to ensure WCAG text contrast for content above */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050508]/90 via-[#050508]/70 to-[#050508]" />
+        </>
+      )}
+      {/* Ambient glow blobs — always visible */}
+      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-yellow-400/5 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
+    </div>
+  );
+}
+
 function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
         <div className="relative w-screen min-h-screen overflow-x-hidden bg-[#050508] text-white font-sans">
-          {/* Ambient glow blobs — always visible */}
-          <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-            <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-yellow-400/5 rounded-full blur-[120px]" />
-            <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
-          </div>
+          <GlobalBackground />
 
           <Toaster 
             position="top-center"
