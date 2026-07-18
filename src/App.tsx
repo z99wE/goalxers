@@ -96,14 +96,14 @@ function App() {
 
           {/* Interactive Fan Photos on Left */}
           <div className="absolute left-6 bottom-4 flex gap-4 pointer-events-auto">
-            <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-[0.12] rotate-[-6deg] hover:rotate-0 hover:opacity-75 hover:scale-110 transition-all duration-500 shadow-2xl">
+            <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-40 rotate-[-6deg] hover:rotate-0 hover:opacity-100 hover:scale-110 transition-all duration-500 shadow-2xl">
               <img 
                 src="/fan_1.jpg" 
                 alt="CheerTribe Fans Left" 
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-[0.12] rotate-[4deg] hover:rotate-0 hover:opacity-75 hover:scale-110 transition-all duration-500 shadow-2xl hidden sm:block">
+            <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-40 rotate-[4deg] hover:rotate-0 hover:opacity-100 hover:scale-110 transition-all duration-500 shadow-2xl hidden sm:block">
               <img 
                 src="/fan_2.jpg" 
                 alt="CheerTribe Fans Left Inner" 
@@ -114,14 +114,14 @@ function App() {
 
           {/* Interactive Fan Photos on Right */}
           <div className="absolute right-6 bottom-4 flex gap-4 pointer-events-auto">
-            <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-[0.12] rotate-[-4deg] hover:rotate-0 hover:opacity-75 hover:scale-110 transition-all duration-500 shadow-2xl hidden sm:block">
+            <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-40 rotate-[-4deg] hover:rotate-0 hover:opacity-100 hover:scale-110 transition-all duration-500 shadow-2xl hidden sm:block">
               <img 
                 src="/fan_3.jpg" 
                 alt="CheerTribe Fans Right Inner" 
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-[0.12] rotate-[8deg] hover:rotate-0 hover:opacity-75 hover:scale-110 transition-all duration-500 shadow-2xl">
+            <div className="relative group w-24 h-24 rounded-2xl overflow-hidden border border-white/10 opacity-40 rotate-[8deg] hover:rotate-0 hover:opacity-100 hover:scale-110 transition-all duration-500 shadow-2xl">
               <img 
                 src="/fan_4.jpg" 
                 alt="CheerTribe Fans Right" 
