@@ -153,6 +153,25 @@ function App() {
             />
           </section>
 
+          {/* Inspirational Quotes Section */}
+          <section className="relative z-10 w-full py-16 bg-[#050508] border-t border-white/5 flex flex-col items-center justify-center overflow-hidden">
+            <div className="max-w-2xl mx-auto px-6 text-center space-y-12">
+              <div className="space-y-3">
+                <p className="text-white/40 italic font-serif text-xl md:text-2xl tracking-wide leading-relaxed">
+                  "Some people think football is a matter of life and death. I assure you, it's much more serious than that."
+                </p>
+                <p className="text-yellow-400/60 text-xs font-mono uppercase tracking-[0.2em]">— Bill Shankly</p>
+              </div>
+              <div className="w-12 h-px bg-white/10 mx-auto"></div>
+              <div className="space-y-3">
+                <p className="text-white/40 italic font-serif text-xl md:text-2xl tracking-wide leading-relaxed">
+                  "I learned all about life with a ball at my feet."
+                </p>
+                <p className="text-yellow-400/60 text-xs font-mono uppercase tracking-[0.2em]">— Ronaldinho</p>
+              </div>
+            </div>
+          </section>
+
           {/* Footer with faded penalty box */}
           <footer className="relative w-full h-44 border-t border-white/5 bg-[#050508] overflow-hidden mt-12 flex items-center justify-center">
             <div className="absolute inset-0 flex justify-center pointer-events-none opacity-[0.03] select-none">
