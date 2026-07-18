@@ -21,7 +21,7 @@ export default function Navigation() {
       {/* Brand */}
       <div className="pl-4 pr-4 py-2 flex items-center gap-2 border-r border-white/8 mr-1">
         <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse shadow-[0_0_8px_rgba(250,204,21,0.8)]" />
-        <span className="text-xs font-black tracking-widest uppercase text-white font-display">Nexus</span>
+        <span className="text-xs font-black tracking-widest uppercase text-white font-display">CheerTribe</span>
       </div>
       
       {navItems.map((item) => (

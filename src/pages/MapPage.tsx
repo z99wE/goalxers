@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { generateTextResponse } from '../services/aiService';
+import StadiumMap from '../components/StadiumMap';
 
 // ── World Cup 2026 Stadium Data ───────────────────────────────────────────────
 const STADIUMS = [
@@ -33,7 +34,7 @@ function NavigationAssistant({ selectedStadium }: { selectedStadium: typeof STAD
   const [messages, setMessages] = useState([
     { role: 'ai', content: selectedStadium
       ? `How can I help you get to ${selectedStadium.name}? I can suggest the best transport route, nearby hotels, or parking options.`
-      : 'Select a stadium on the left, or ask me how to navigate to any World Cup 2026 venue across the USA, Mexico, and Canada.' }
+      : 'Select a stadium on the left or click a marker on the map, or ask me how to navigate to any World Cup 2026 venue.' }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -130,10 +131,15 @@ export default function MapPage() {
           <h1 className="text-5xl md:text-6xl font-black text-white mb-5" style={{ fontFamily: "'Barlow Condensed', sans-serif", letterSpacing: '-0.02em' }}>
             Stadiums &amp; Navigation
           </h1>
-          {/* Pitch image strip */}
-          <div className="h-24 rounded-xl overflow-hidden mb-6">
-            <img src="/pitch_closeup.png" alt="Football pitch" className="w-full h-full object-cover object-center" />
+          {/* Dynamic Open Street Map */}
+          <div className="mb-8">
+            <StadiumMap
+              stadiums={filtered}
+              selectedStadium={selected}
+              onSelectStadium={(s) => setSelected(s)}
+            />
           </div>
+
           {/* Filters */}
           <div className="flex gap-2">
             {(['All', 'USA', 'Mexico', 'Canada'] as const).map(f => (

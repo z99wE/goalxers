@@ -47,46 +47,35 @@ const apiLimiter = rateLimit({
 
 app.use('/api/', apiLimiter);
 
-// Proxy Deepgram Token request
-app.get('/api/deepgram/token', async (req, res) => {
+// Server-side Deepgram Transcription proxy using raw body payload
+app.post('/api/transcribe', express.raw({ type: 'audio/*', limit: '12mb' }), async (req, res) => {
   try {
     const deepgramKey = process.env.DEEPGRAM_API_KEY;
     if (!deepgramKey) throw new Error('Deepgram key not found in server');
-    
-    // Create a temporary key for the client
-    const response = await fetch('https://api.deepgram.com/v1/projects', {
-      headers: {
-        Authorization: `Token ${deepgramKey}`,
-      }
-    });
-    
-    if (!response.ok) {
-        throw new Error('Failed to get Deepgram projects');
-    }
-    const { projects } = await response.json();
-    const projectId = projects[0].project_id;
-    
-    const keyResponse = await fetch(`https://api.deepgram.com/v1/projects/${projectId}/keys`, {
+
+    const response = await fetch(
+      'https://api.deepgram.com/v1/listen?model=nova-2&smart_format=true',
+      {
         method: 'POST',
         headers: {
-            Authorization: `Token ${deepgramKey}`,
-            'Content-Type': 'application/json'
+          Authorization: `Token ${deepgramKey}`,
+          'Content-Type': req.headers['content-type'] || 'audio/webm',
         },
-        body: JSON.stringify({
-            comment: 'FIFA App temporary client key',
-            scopes: ['usage:write'],
-            time_to_live_in_seconds: 60 * 60 // 1 hour
-        })
-    });
-    
-    if (!keyResponse.ok) {
-        throw new Error('Failed to create Deepgram key');
+        body: req.body,
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Deepgram API responded with status ${response.status}: ${errorText}`);
     }
-    const { key } = await keyResponse.json();
-    res.json({ token: key });
+
+    const data = await response.json();
+    const transcript = data.results?.channels[0]?.alternatives[0]?.transcript || '';
+    res.json({ transcript });
   } catch (error) {
-    console.error('Deepgram API Error:', error);
-    res.status(500).json({ error: 'Failed to generate token' });
+    console.error('Transcription Server Error:', error);
+    res.status(500).json({ error: 'Failed to transcribe audio' });
   }
 });
 

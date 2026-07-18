@@ -50,18 +50,18 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
 
   const [messages, setMessages] = useState<Message[]>(() => {
     try {
-      const saved = localStorage.getItem('nexus_ai_chat_v3');
+      const saved = localStorage.getItem('cheertribe_ai_chat_v3');
       if (saved) return JSON.parse(saved);
     } catch (_) {}
     return [{
       id: '1',
       role: 'ai',
-      content: 'Welcome to Nexus 2026. Ask me anything about World Cup tickets, stadium directions, match schedules, or travel tips across 16 host cities.',
+      content: 'Welcome to CheerTribe 2026. Ask me anything about World Cup tickets, stadium directions, match schedules, or travel tips across 16 host cities.',
     }];
   });
 
   useEffect(() => {
-    try { localStorage.setItem('nexus_ai_chat_v3', JSON.stringify(messages)); }
+    try { localStorage.setItem('cheertribe_ai_chat_v3', JSON.stringify(messages)); }
     catch (_) {}
   }, [messages]);
 
@@ -149,7 +149,7 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
       content: 'Chat cleared. What World Cup 2026 question can I help you with?',
     }]);
     setActivities([]);
-    localStorage.removeItem('nexus_ai_chat_v3');
+    localStorage.removeItem('cheertribe_ai_chat_v3');
   };
 
   const chatPanel = (
@@ -160,13 +160,13 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
           : 'fixed bottom-24 right-6 w-[400px] h-[580px] bg-[#0a0a10] border border-white/8 rounded-2xl flex flex-col overflow-hidden shadow-[0_20px_80px_rgba(0,0,0,0.7)] z-50'
       }
       role="dialog"
-      aria-label="Nexus AI Assistant"
+      aria-label="CheerTribe AI Assistant"
     >
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-white/6 flex-shrink-0">
         <div>
           <h3 className="font-black text-white text-sm tracking-widest uppercase" style={{ fontFamily: "'Barlow Condensed', sans-serif", letterSpacing: '0.1em' }}>
-            NEXUS AI
+            CHEERTRIBE AI
           </h3>
           <div className="flex items-center gap-1.5 mt-0.5">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />

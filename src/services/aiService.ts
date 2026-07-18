@@ -11,25 +11,17 @@ export async function generateTextResponse(
 }
 
 export async function transcribeAudio(audioBlob: Blob): Promise<string> {
-  const tokenRes = await fetch('/api/deepgram/token');
-  if (!tokenRes.ok) throw new Error('Deepgram token unavailable');
-  const { token } = await tokenRes.json();
+  const response = await fetch('/api/transcribe', {
+    method: 'POST',
+    headers: {
+      'Content-Type': audioBlob.type || 'audio/webm',
+    },
+    body: audioBlob,
+  });
 
-  const response = await fetch(
-    'https://api.deepgram.com/v1/listen?model=nova-2&smart_format=true',
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Token ${token}`,
-        'Content-Type': audioBlob.type || 'audio/webm',
-      },
-      body: audioBlob,
-    }
-  );
-
-  if (!response.ok) throw new Error(`Deepgram STT error: ${response.statusText}`);
+  if (!response.ok) throw new Error('Transcription failed');
   const data = await response.json();
-  return data.results?.channels[0]?.alternatives[0]?.transcript || '';
+  return data.transcript || '';
 }
 
 /** Silent-fail speech synthesis — never throws to caller. */

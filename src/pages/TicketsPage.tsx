@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { generateTextResponse } from '../services/aiService';
+import FanCarousel from '../components/FanCarousel';
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 const TICKET_CATEGORIES = [
@@ -232,8 +233,15 @@ export default function TicketsPage() {
           <TicketAssistant />
 
           {/* Pitch photo */}
+          {/* Pitch photo */}
           <div className="rounded-2xl overflow-hidden">
             <img src="/pitch_closeup.png" alt="Football pitch" className="w-full h-44 object-cover" />
+          </div>
+
+          {/* Fan Carousel */}
+          <div>
+            <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-3">Supporter Atmosphere</p>
+            <FanCarousel />
           </div>
 
           {/* Info box */}
@@ -241,7 +249,7 @@ export default function TicketsPage() {
             <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-3">Purchase Info</p>
             <div className="space-y-3">
               {[
-                ['Resale policy', 'Official transfers only via Nexus platform'],
+                ['Resale policy', 'Official transfers only via CheerTribe platform'],
                 ['Payment', 'Cashless — Visa, Mastercard, Apple Pay'],
                 ['Delivery', 'Digital smart pass to your phone'],
                 ['Refunds', 'Full refund up to 30 days before match'],

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import FanCarousel from '../components/FanCarousel';
 
 const MATCHES = [
   { home: 'USA', away: 'Mexico', date: 'Jun 11', venue: 'Estadio Azteca', time: '19:00', score: 'LIVE', homeFlag: '🇺🇸', awayFlag: '🇲🇽' },
@@ -99,28 +100,17 @@ export default function Home() {
 
         {/* Hero Content */}
         <motion.div 
-          className="relative z-10 text-center px-4 max-w-5xl mx-auto"
+          className="relative z-10 text-center px-4 max-w-5xl mx-auto pt-16"
           style={{ y: heroY, opacity: heroOpacity }}
         >
-          {/* Badge */}
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/30 rounded-full px-5 py-2 mb-8 backdrop-blur-sm"
-          >
-            <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
-            <span className="text-yellow-400 font-mono text-xs tracking-widest uppercase font-bold">World Cup 2026 · AI Intelligence Platform</span>
-          </motion.div>
-
           <motion.h1
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.15, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="text-6xl md:text-8xl font-black tracking-tighter mb-6 leading-none"
+            className="text-6xl md:text-8xl font-black mb-6 leading-[1.15] py-2 px-1 tracking-tight"
           >
             <span className="text-white">Every Match.</span><br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 pb-2 inline-block">
               One Platform.
             </span>
           </motion.h1>
@@ -131,7 +121,7 @@ export default function Home() {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="text-xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            Nexus 2026 routes your questions about tickets, stadiums, and match schedules to specialized AI agents — giving you instant, accurate answers in any language.
+            CheerTribe 2026 routes your questions about tickets, stadiums, and match schedules to specialized AI agents — giving you instant, accurate answers in any language.
           </motion.p>
 
           <motion.div
@@ -189,6 +179,16 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════════════════════════
+          FAN ATMOSPHERE CAROUSEL
+      ════════════════════════════════════════ */}
+      <section className="py-12 max-w-7xl mx-auto px-4">
+        <h2 className="text-[11px] font-mono font-bold text-yellow-400 tracking-widest uppercase mb-6" style={{ letterSpacing: '0.12em' }}>
+          CheerTribe Supporters in Action
+        </h2>
+        <FanCarousel />
+      </section>
+
+      {/* ═══════════════════════════════════════
           STATS BAND
       ════════════════════════════════════════ */}
       <section className="py-16 border-y border-white/5">
@@ -242,7 +242,7 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <span className="text-yellow-400 font-mono text-xs tracking-widest uppercase font-bold">Nexus Intelligence</span>
+              <span className="text-yellow-400 font-mono text-xs tracking-widest uppercase font-bold">CheerTribe Intelligence</span>
               <h2 className="text-4xl md:text-5xl font-black text-white mt-3 mb-6 leading-tight">
                 Your entire World Cup,<br /><span className="text-yellow-400">one conversation.</span>
               </h2>
@@ -333,15 +333,16 @@ export default function Home() {
             <p className="text-slate-400 mb-8 max-w-md mx-auto">Start planning your World Cup 2026 experience now. No account required.</p>
             <button
               onClick={() => navigate('/assistant')}
-              className="px-10 py-4 bg-yellow-400 text-black font-black rounded-full hover:bg-yellow-300 hover:shadow-[0_0_40px_rgba(250,204,21,0.3)] transition-all duration-300 hover:scale-105 cursor-pointer"
+              className="px-10 py-4 bg-yellow-400 text-black font-black rounded-full hover:bg-yellow-300 hover:shadow-[0_0_40px_rgba(250,204,21,0.3)] transition-all duration-300 hover:scale-105 cursor-pointer uppercase text-sm font-black"
+              style={{ letterSpacing: '0.06em' }}
             >
-              Chat With Nexus AI
+              Chat With CheerTribe AI
             </button>
           </div>
         </div>
         
         <div className="bg-[#030305] border-t border-white/5 py-6 px-4 text-center">
-          <p className="text-slate-600 text-xs">© 2026 Nexus Intelligence Platform · Not affiliated with FIFA · Built for World Cup 2026</p>
+          <p className="text-slate-600 text-xs">© 2026 CheerTribe Intelligence Platform · Not affiliated with FIFA · Built for World Cup 2026</p>
         </div>
       </footer>
     </div>
