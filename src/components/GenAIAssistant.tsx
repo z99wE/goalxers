@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { generateTextResponse } from '../services/aiService';
 import { orchestrator } from '../services/agents/Orchestrator';
@@ -16,7 +16,7 @@ const SNIPPETS = [
 ];
 
 // ── Agent Activity Feed ───────────────────────────────────────────────────────
-function AgentActivityFeed({ activities }: { activities: AgentActivity[] }) {
+const AgentActivityFeed = memo(function AgentActivityFeed({ activities }: { activities: AgentActivity[] }) {
   if (activities.length === 0) return null;
   return (
     <div className="border-t border-white/5 px-4 py-3 bg-black/30 flex-shrink-0 space-y-1.5 max-h-28 overflow-y-auto">
@@ -37,7 +37,7 @@ function AgentActivityFeed({ activities }: { activities: AgentActivity[] }) {
       ))}
     </div>
   );
-}
+});
 
 // ── Main Component ────────────────────────────────────────────────────────────
 export default function GenAIAssistant({ embedded = false }: { embedded?: boolean }) {
@@ -83,12 +83,12 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
     }
   }, []);
 
-  const clearChat = () => {
+  const clearChat = useCallback(() => {
     setActivities([]);
     localStorage.removeItem('cheertribe_ai_chat_v3');
-  };
+  }, []);
 
-  const handleSend = async (_text: string, history: ChatMessage[]) => {
+  const handleSend = useCallback(async (_text: string, history: ChatMessage[]) => {
     setActivities([]); // Reset activity log for new query
     try {
       const apiMessages = history.map(m => ({
@@ -101,7 +101,11 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
       toast.error('Could not reach AI. Check your API keys or connection.');
       throw new Error('Service unavailable');
     }
-  };
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   const chatPanelClass = embedded
     ? 'w-full max-w-2xl h-[680px] shadow-[0_20px_80px_rgba(0,0,0,0.7)]'
@@ -116,7 +120,7 @@ export default function GenAIAssistant({ embedded = false }: { embedded?: boolea
       initialMessages={initialMessages}
       onSend={handleSend}
       onClear={clearChat}
-      onClose={embedded ? undefined : () => setIsOpen(false)}
+      onClose={embedded ? undefined : handleClose}
       onMessagesChange={handleMessagesChange}
       className={chatPanelClass}
       embedded={embedded}

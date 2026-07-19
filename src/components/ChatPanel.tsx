@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, memo } from 'react';
 
 /**
  * Represents a single message in the chat history.
@@ -46,7 +46,7 @@ interface ChatPanelProps {
  * Features auto-scrolling, quick queries, a typing indicator, and responsive design.
  */
 
-export default function ChatPanel({
+const ChatPanel = memo(function ChatPanel({
   agentName,
   title,
   subtitle,
@@ -209,4 +209,6 @@ export default function ChatPanel({
       </form>
     </div>
   );
-}
+});
+
+export default ChatPanel;

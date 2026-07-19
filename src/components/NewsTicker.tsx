@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 
-export default function NewsTicker() {
+const NewsTicker = memo(function NewsTicker() {
   const [paused, setPaused] = useState(false);
 
   const news = [
@@ -74,4 +74,6 @@ export default function NewsTicker() {
       </div>
     </div>
   );
-}
+});
+
+export default NewsTicker;

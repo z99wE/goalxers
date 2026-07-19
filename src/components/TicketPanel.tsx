@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, ShieldCheck, Star, Armchair, Wine } from 'lucide-react';
 
@@ -6,7 +7,7 @@ interface TicketPanelProps {
   onClose?: () => void;
 }
 
-export default function TicketPanel({ sectionId = 'SEC-VIP', onClose }: TicketPanelProps) {
+const TicketPanel = memo(function TicketPanel({ sectionId = 'SEC-VIP', onClose }: TicketPanelProps) {
   return (
     <motion.div
       initial={{ x: '100%', opacity: 0 }}
@@ -101,4 +102,6 @@ export default function TicketPanel({ sectionId = 'SEC-VIP', onClose }: TicketPa
       </div>
     </motion.div>
   );
-}
+});
+
+export default TicketPanel;

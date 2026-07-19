@@ -1,9 +1,9 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, memo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, PerspectiveCamera, Stars } from '@react-three/drei';
 import * as THREE from 'three';
 
-function RealisticStadium() {
+const RealisticStadium = memo(function RealisticStadium() {
   const groupRef = useRef<THREE.Group>(null);
   const fieldRef = useRef<THREE.Mesh>(null);
   
@@ -117,12 +117,12 @@ function RealisticStadium() {
       <Stars radius={100} depth={50} count={1000} factor={3} saturation={0} fade speed={2} />
     </group>
   );
-}
+});
 
 export default function Stadium3D() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-40">
-      <Canvas>
+      <Canvas dpr={[1, 2]} performance={{ min: 0.5 }}>
         {/* Spectator Viewpoint */}
         <PerspectiveCamera makeDefault position={[0, 15, 30]} fov={55} rotation={[-0.2, 0, 0]} />
         <fog attach="fog" args={['#050508', 20, 150]} />
