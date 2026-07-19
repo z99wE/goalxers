@@ -73,4 +73,49 @@ describe('GenAIAssistant', () => {
         expect(screen.queryByPlaceholderText(/Ask about tickets, stadiums, schedules/i)).not.toBeInTheDocument();
     });
   });
+
+  it('handles localStorage read and write errors gracefully', () => {
+    // Mock localStorage to throw an error
+    const mockGetItem = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => { throw new Error('Storage disabled'); });
+    const mockSetItem = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('Storage disabled'); });
+    const originalWarn = console.warn;
+    console.warn = vi.fn();
+
+    render(<GenAIAssistant embedded />);
+    
+    // Attempting to send a message will trigger save
+    const input = screen.getByPlaceholderText(/Ask about tickets, stadiums, schedules/i);
+    fireEvent.change(input, { target: { value: 'Hi' } });
+    const sendBtn = screen.getByRole('button', { name: /send message/i });
+    fireEvent.click(sendBtn);
+
+    expect(console.warn).toHaveBeenCalledWith('Failed to load chat history from localStorage:', expect.any(Error));
+    expect(console.warn).toHaveBeenCalledWith('Failed to save chat history to localStorage:', expect.any(Error));
+
+    mockGetItem.mockRestore();
+    mockSetItem.mockRestore();
+    console.warn = originalWarn;
+  });
+
+  it('handles LLM API call failures gracefully', async () => {
+    const aiService = await import('../services/aiService');
+    const mockError = new Error('API down');
+    vi.mocked(aiService.generateTextResponse).mockRejectedValueOnce(mockError);
+    
+    const originalError = console.error;
+    console.error = vi.fn();
+
+    render(<GenAIAssistant embedded />);
+    
+    const input = screen.getByPlaceholderText(/Ask about tickets, stadiums, schedules/i);
+    fireEvent.change(input, { target: { value: 'Crash' } });
+    const sendBtn = screen.getByRole('button', { name: /send message/i });
+    fireEvent.click(sendBtn);
+
+    await waitFor(() => {
+      expect(console.error).toHaveBeenCalledWith('LLM API call failed:', mockError);
+    });
+
+    console.error = originalError;
+  });
 });

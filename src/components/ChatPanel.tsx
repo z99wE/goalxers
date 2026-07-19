@@ -108,7 +108,7 @@ export default function ChatPanel({
   };
 
   return (
-    <div 
+    <div
       className={`bg-[#0a0a10] border border-white/8 rounded-2xl flex flex-col overflow-hidden hover:border-yellow-400/20 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(250,204,21,0.05)] transition-all duration-300 ${className}`}
       role="region"
       aria-label={`${agentName} Chat Interface`}
@@ -153,7 +153,7 @@ export default function ChatPanel({
       </div>
 
       {/* Messages Area */}
-      <div 
+      <div
         ref={scrollContainerRef}
         className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-3 min-h-0 focus:outline-none focus:ring-1 focus:ring-yellow-400/30"
         tabIndex={0}
@@ -162,11 +162,10 @@ export default function ChatPanel({
         aria-label={`${title} chat history`}
       >
         {messages.map((m, i) => (
-          <div key={i} className={`max-w-[88%] px-4 py-2.5 rounded-xl text-sm leading-[1.65] ${
-            m.role === 'ai'
+          <div key={i} className={`max-w-[88%] px-4 py-2.5 rounded-xl text-sm leading-[1.65] ${m.role === 'ai'
               ? 'self-start bg-white/5 border border-white/8 text-slate-200 rounded-tl-sm'
               : 'self-end bg-yellow-400 text-black font-semibold rounded-tr-sm shadow-[0_4px_20px_rgba(250,204,21,0.15)]'
-          }`} style={{ letterSpacing: '0.01em' }}>
+            }`} style={{ letterSpacing: '0.01em' }}>
             {m.content}
           </div>
         ))}
