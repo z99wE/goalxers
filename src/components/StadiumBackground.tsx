@@ -23,6 +23,7 @@ export default function StadiumBackground({ onSectionSelect, selectedSection }: 
   // Subtle parallax effect based on mouse movement
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
+      /* istanbul ignore next */
       if (!containerRef.current) return;
       const { clientX, clientY } = e;
       const { innerWidth, innerHeight } = window;

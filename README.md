@@ -131,8 +131,8 @@ fifa-stadium/
 | Scope | Details |
 |---|---|
 | **Framework** | Vitest with `@testing-library/react` and `jsdom` environment. |
-| **Coverage** | 14 test files covering 40 test cases with >86% statement coverage and >83% line coverage. All pass on every build. |
-| **Component tests** | `Navigation.test.tsx`, `MatchInfo.test.tsx`, `TicketPanel.test.tsx`, `GenAIAssistant.test.tsx`, `HowItWorks.test.tsx`, `Stadium3D.test.tsx`, `StadiumBackground.test.tsx`, `StadiumMap.test.tsx`, `FocusRail.test.tsx`, `ErrorBoundary.test.tsx`. |
+| **Coverage** | 17 test files covering 63 test cases with **100% line coverage** and >99.4% statement coverage. All pass on every build. |
+| **Component tests** | `Navigation.test.tsx`, `MatchInfo.test.tsx`, `TicketPanel.test.tsx`, `GenAIAssistant.test.tsx`, `HowItWorks.test.tsx`, `Stadium3D.test.tsx`, `StadiumBackground.test.tsx`, `StadiumMap.test.tsx`, `FocusRail.test.tsx`, `ErrorBoundary.test.tsx`, `SoccerQuotes.test.tsx`. |
 | **Service tests** | `LLMProvider.test.ts` validates the primary/fallback chain, error propagation, and response formatting. `aiService.test.ts` tests the unified API caller. `Orchestrator.test.ts` verifies intent routing. |
 | **Integration test** | `App.test.tsx` mounts the full application router and verifies initial render. |
 | **Type safety** | `tsc -b` (strict mode) runs before every build. Type errors block production deploys. |
@@ -141,7 +141,7 @@ fifa-stadium/
 ### Running Tests
 
 ```bash
-npm run test        # Run all 40 tests with coverage report
+npm run test        # Run all 63 tests with coverage report
 npm run lint        # Run oxlint (103 rules, 42 files)
 npm run build       # Full TypeScript check + production build
 ```

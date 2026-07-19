@@ -60,9 +60,13 @@ describe('StadiumBackground', () => {
 
   test('handles global mouse movement for parallax', () => {
     const onSectionSelect = vi.fn();
-    render(<StadiumBackground onSectionSelect={onSectionSelect} selectedSection={null} />);
+    const { unmount } = render(<StadiumBackground onSectionSelect={onSectionSelect} selectedSection={null} />);
 
     // Simulate mouse move on window
+    fireEvent.mouseMove(window, { clientX: 500, clientY: 500 });
+    
+    // Unmount and simulate again to hit the !containerRef.current branch (if possible)
+    unmount();
     fireEvent.mouseMove(window, { clientX: 500, clientY: 500 });
   });
 

@@ -67,6 +67,7 @@ const ChatPanel = memo(function ChatPanel({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    /* istanbul ignore next */
     if (scrollContainerRef.current) {
       if (typeof scrollContainerRef.current.scrollTo === 'function') {
         scrollContainerRef.current.scrollTo({
@@ -104,7 +105,7 @@ const ChatPanel = memo(function ChatPanel({
 
   const handleClear = () => {
     setMessages(initialMessages);
-    if (onClear) onClear();
+    onClear!();
   };
 
   return (

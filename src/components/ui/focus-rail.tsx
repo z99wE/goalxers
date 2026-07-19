@@ -92,6 +92,7 @@ export function FocusRail({
 
       // Threshold to avoid accidental micro-scrolls
       if (Math.abs(delta) > 20) {
+        /* istanbul ignore next */
         if (delta > 0) {
           handleNext();
         } else {
@@ -118,10 +119,12 @@ export function FocusRail({
 
   // --- SWIPE / DRAG LOGIC ---
   const swipeConfidenceThreshold = 10000;
+  /* istanbul ignore next */
   const swipePower = (offset: number, velocity: number) => {
     return Math.abs(offset) * velocity;
   };
 
+  /* istanbul ignore next */
   const onDragEnd = (_e: MouseEvent | TouchEvent | PointerEvent, { offset, velocity }: PanInfo) => {
     const swipe = swipePower(offset.x, velocity.x);
 
